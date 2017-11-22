@@ -1,0 +1,107 @@
+\documentclass[pdftex,12pt,a4paper]{scrartcl} % KOMA script article document class
+\usepackage[utf8]{inputenc} % encoding utf-8 - remark:utf8x has problem with bibtex
+\usepackage[T1]{fontenc} % use new encoding method (?)
+\usepackage{textcomp,booktabs,amsmath}
+\usepackage[pdftex]{graphicx} %advance graphic package
+\usepackage{ifthen} %load 'if' package for controll structures
+\usepackage{float} %package for fixed picture floating (option H)
+\usepackage{fancyhdr} %advanced header and footer style
+\usepackage{fix-cm} %makes fonts more resizeable
+\usepackage[colorlinks=false, pdfborder={0 0 0},plainpages=false]{hyperref} %clickable links in pdf without borders
+\usepackage{newcent,courier} %times as standard font and courier as typewriter style
+\usepackage[scaled=.92]{helvet} %helvetica font for serif less
+\usepackage[english]{babel} % Neue Rechtschreibung
+% \usepackage[german]{isodate} % Paket, um \today auch im Format dd.mm.yyyy anzeigen zu können
+\usepackage{setspace} % 1,5x Zeilenabstand
+\usepackage{color} %for defining colors
+\definecolor{gray}{gray}{.4} %define color gray
+\usepackage{paralist}
+\usepackage{listings}
+
+%Variables
+\newboolean{showTableOfContent} %Declaration of a boolean
+\newboolean{showTitlepage}
+\newboolean{showHeaderFooter}
+\newboolean{showTitleHeader}
+
+%ADDITIONAL PREAMBLE
+\input{pages/additionalPreamble.tex} %look here and change title and author
+
+%START DOCUMENT
+\begin{document}
+
+%CONFIG
+\input{pages/config.tex} %look here and change title and author
+
+%HEADER/FOOTER START
+\ifshowHeaderFooter
+	
+	\setlength{\headheight}{1.5cm}
+	\pagestyle{fancy} %eigener header/footer Seitenstil
+	\fancyhf{} %remove everything
+
+	\lhead{\includegraphics[scale=0.03]{img/logo_tuwien_with_informatics.png}}
+	\chead{}
+	\rhead{\textcolor{gray}{\docInstituteNum \; \docLvaName: \docExerciseName}}
+	\renewcommand{\headrulewidth}{0.4pt}
+
+	\lfoot{\footnotesize\textcolor{gray}{}}
+	\cfoot{}
+	\rfoot{\footnotesize\textcolor{gray}{\thepage}}
+	\renewcommand{\footrulewidth}{0.4pt}
+	
+\else
+	\pagestyle{plain} %eigener header/footer Seitenstil
+\fi
+%HEADER/FOOTER END
+
+
+%TITELPAGE START
+\ifshowTitlepage
+	\input{pages/titlepage.tex}
+\fi
+%TITELPAGE END
+
+
+%TABLE OF CONTENT START
+\ifshowTableOfContent
+	\clearpage\pagenumbering{roman} %hack for avoiding "destination with the same identifier"- warning
+	\tableofcontents % 'Inhaltsverzeichnis'
+	\newpage
+	\pagenumbering{arabic}
+	\setcounter{page}{1} %will not count the toc to page numbers, instead toc has its own numbering in roman digits
+\fi
+%TABLE OF CONTENT END
+
+
+
+%CONTENT START
+% \input{pages/content.tex}
+
+%(i) describe the steps made for obtaining your alternative solution(s)
+%(ii) comment the modeling choices you have made for obtaining/improving presented solutions
+%(iii) provide a proof of correctness (the proof could be informal)
+%(iv) compare it with at leas one publicly available solution
+%(v) analyze the performance of the considered solutions
+%
+%The performance of the provided solution(s) can be tested by using an ASP solver of choice, and exploiting a reasonable number of instances among the ones publicly available.
+%In case you opt for using more than one ASP solver, discuss the impact of design choices on different implementations.
+%
+%The results of the analyses must be reported in a report structured as follows:
+%
+%- Report Cover (1pg): Student Name, and ID, email and name of the assigned problem 
+%- Introduction (1pg): Description of the problem
+%- Solutions of the problem: Containing answers to point (i), (ii), (iii) and (iv)
+%- Performance Analysis: Containing description of the benchmark setting (considered solver(s) and instances), and answers to point (v)
+%- Conclusion(1pg): Summarize the actions performed and the general conclusion of your analyses
+
+\input{pages/datasets}
+
+
+%CONTENT END
+\addcontentsline{toc}{section}{References}
+\bibliographystyle{plain} %take natbib if you need refernces by Author&year
+\bibliography{lit}
+
+\end{document}
+%END DOCUMENT

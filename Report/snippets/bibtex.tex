@@ -1,0 +1,32 @@
+%  ----------------------------------------------------------------------------
+%  	HOW TO USE BIBTEX
+%  ----------------------------------------------------------------------------
+%   For details see
+%   http://en.wikibooks.org/wiki/LaTeX/Bibliography_Management#Add_the_Bibliography_to_the_Table_of_Contents_as_numbered_item
+%
+%   For a complete list of Bibtex styles see:
+%   http://amath.colorado.edu/documentation/LaTeX/reference/faq/bibstyles.pdf
+%
+%   Notice: utf8x package has problem with bibtex
+%  ----------------------------------------------------------------------------
+
+%  ----------------------------------------------------------------------------
+%  	BIBTEX: DEFINITION (put it in preamble e.g.)
+%  ----------------------------------------------------------------------------
+
+\usepackage{biblatex}
+\bibliographystyle{splncs03} % one of over 40 styles
+
+\bibliography{pages/literature} % the used bibliography (path without .bib)
+
+%  ----------------------------------------------------------------------------
+%  	BIBTEX: EXAMPLES
+%  ----------------------------------------------------------------------------
+
+%add the bibliography to table of content
+\cleardoublepage
+\phantomsection
+\addcontentsline{toc}{chapter}{Bibliography}
+
+%print bibliography
+\printbibliography

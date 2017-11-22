@@ -1,0 +1,93 @@
+%  ----------------------------------------------------------------------------
+%
+%       Copyright (for the template) 2011 by [pfavre]
+%
+%  ----------------------------------------------------------------------------
+%  TITLEPAGE - Customize: see config.tex
+%  ----------------------------------------------------------------------------
+%	
+
+\clearpage\pagenumbering{alph} %hack for avoiding "destination with the same identifier"- warning
+\newcommand*{\marginLeft}{1.0cm}
+% \selectlanguage{ngerman}
+\begin{titlepage}
+		\vspace*{-2.50cm}
+		
+		\ifshowTitleHeader
+		\begin{figure}[htbp]
+			\begin{minipage}[t]{4cm}
+				\vspace{0pt}
+				\hspace{1.45cm}
+				\includegraphics[width=1.7cm]{img/logo_tuwien_with_informatics.png}
+			\end{minipage}
+			\hspace{-0.7cm}
+			\begin{minipage}[t]{7cm}
+				\vspace{9pt}
+				\fontsize{0.45cm}{0.1cm}\selectfont
+				\textsf{\textcolor{gray}{Technische Universität Wien}}
+			\end{minipage}
+		\end{figure}
+		\fi
+		
+		\vspace*{4.0cm}
+		\hrule
+		\vspace*{3mm}
+		\fontsize{0.5cm}{0.1cm}\selectfont
+		\hspace{\marginLeft}
+		\textrm{\docInstituteNum}
+		
+		
+		\fontsize{0.8cm}{0.1cm}\selectfont
+		\hspace{0.5cm}
+		\textrm{\docLvaName} \fontsize{0.6cm}{0.1cm}\selectfont\textrm{\textcolor{gray}{\docSemester}}
+		
+		\vspace*{0mm}
+		\fontsize{0.55cm}{0.1cm}\selectfont
+		\hspace{\marginLeft}
+		\textrm{\docExerciseName}
+		
+		\vspace*{5mm}
+		\hrule
+		
+		\vspace*{5cm}
+		\fontsize{0.55cm}{0.1cm}\selectfont
+		\hspace{\marginLeft}
+		\textrm{Task: Permutation Pattern Matching}		
+		
+		\fontsize{0.5cm}{0.2cm}\selectfont
+		\vspace*{1cm}
+		\hspace{0.85cm}
+		\textsf{\textbf{\docGroupName}}
+
+		\fontsize{0.4cm}{0.2cm}\selectfont
+		\hspace{\marginLeft}\textrm{\docAuthor}
+		
+		\fontsize{0.4cm}{0.2cm}\selectfont
+		\hspace{\marginLeft}\textrm{\docAuthorTwo}
+		
+		\fontsize{0.4cm}{0.2cm}\selectfont
+		\hspace{\marginLeft}\textrm{\docAuthorThree}
+		
+		\fontsize{0.4cm}{0.2cm}\selectfont
+		\hspace{\marginLeft}\textrm{\docAuthorFour}
+		
+		\fontsize{0.4cm}{0.2cm}\selectfont
+		\hspace{\marginLeft}\textrm{\docAuthorFive}
+		
+		\vfill
+		
+		\fontsize{0.35cm}{0.2cm}\selectfont
+		\hspace{\marginLeft}\textrm{\docDate}
+		\hfill
+		\fontsize{0.35cm}{0.2cm}\selectfont
+		\textit{\textcolor{gray}{\docVersion}}
+
+
+		
+		\setcounter{page}{1} 	% but pagecount remains 0
+		
+\end{titlepage}
+
+%
+% EOF
+%
