@@ -1,0 +1,61 @@
+%
+%  ----------------------------------------------------------------------------
+%  	USE CASE SNIPPET: A way to present Use Cases in a table-style way
+%  ----------------------------------------------------------------------------
+%	
+%	Notice: A label will be created for using it with \ref. It can be
+%	accessed through \ref{tab:TableCaption} while TableCaption is the 
+%	argument given with the use case enviroment.
+%
+
+%  ----------------------------------------------------------------------------
+%  	USE CASE SNIPPET: DEFINITION (put it in preamble e.g.)
+%  ----------------------------------------------------------------------------
+
+\newcommand\addrow[2]{#1 &#2\\ }
+
+\newcommand\addheading[2]{#1 &#2\\ \hline}
+
+\newcommand\addmulrow[2]{ \begin{minipage}[t][][t]{3.5cm}#1\end{minipage}% 
+   & \begin{minipage}[t][][t]{10cm}
+    \begin{enumerate}\itemsep-1mm #2   \end{enumerate}
+    \end{minipage}\\ }
+    
+\newcommand*{\UseCaseTableCaption}{} %definition for the use case table caption
+
+%Synopsis: \begin{usecase}{The Caption and Label with :tab} ... \end{usecase}
+\newenvironment{usecase}[1]%
+{%
+	\renewcommand*{\UseCaseTableCaption}{#1}%
+	\begin{table}[htbp]%
+		\hspace{5mm}%
+		\begin{tabular}{l | p{10cm}}%
+		\hline%
+}%
+{%
+		\hline%
+		\end{tabular}%
+		\caption{\UseCaseTableCaption}%
+		\label{tab:\UseCaseTableCaption}%
+	\end{table}%
+}%
+
+%  ----------------------------------------------------------------------------
+%  	USE CASE SNIPPET: EXAMPLES
+%  ----------------------------------------------------------------------------
+
+\begin{usecase}{The Caption of the Usecase}
+  \addheading{Name}{Use Logs in} 
+  \addrow{Actor}{System user}
+  \addrow{Precondition}{The system, shows, in the form part of an object type, the number   indication.}
+  \addrow{Postcondition}{A disconnected number indicating the type of `other constructed object'.}
+  \addmulrow{Main path}{\item User selects \ldots\item System demands \ldots}
+\end{usecase}
+
+
+
+
+
+
+%  ----------------------------------------------------------------------------
+%  ----------------------------------------------------------------------------

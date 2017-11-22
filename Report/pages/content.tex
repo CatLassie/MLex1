@@ -1,0 +1,64 @@
+%  ----------------------------------------------------------------------------
+%
+%       Copyright (for the template) 2011 by [pfavre]
+%
+%  ----------------------------------------------------------------------------
+%  CONTENT
+%  ----------------------------------------------------------------------------
+%	
+
+\section{Kurzes Tutorial}
+Das ist eine simples \LaTeX-Beispiel. Mit dem Hyperref package können Referenzen in einem PDF geklickt werden. Man kann natürlich auch Fußnoten setzten\footnote{Welches hier unten gelesen werden kann}.
+
+Mit einer Leerzeile im Editor entsteht ein neuer Absatz. Ich kann natürlich auch eine Aufzählung machen:
+\begin{itemize}
+  \item Das erste Element
+  \item Das zweite Element
+  \item und so weiter
+  \begin{itemize}
+	  \item Unterelement
+	  \item sind natürlich
+	  \item auch möglich
+	\end{itemize}
+\end{itemize}
+
+
+Jetzt zeige ich eine Referenz zu Abschnitt \ref{sec:Fonts Bearbeiten} . Damit das funktioniert muss man manuell Labels unter sections setzten. Mit dem Hyperref package können Referenzen in einem PDF geklickt werden.
+
+Eine andere Art Dinge aufzulisten ist die Definitionsliste:
+\begin{description}
+	\item[Definition1] Erklärung
+	\item[Definition2] Erklärung
+\end{description}
+\subsection{Tabellen}
+Dies ist eine normale Tabelle
+\begin{tabular}[h]{|l|c|} %[Platzierung]{Spalten und deren align und borders}
+  \hline
+  Lehrstuhl & Professoren\\
+  \hline\hline
+  LS2 & Wegener\\
+  LS8 & Morik\\
+  LS10 & Doberkat\\
+  \hline
+\end{tabular}
+
+\subsection{Weitere Funktionen}
+Man kann das Dokument mit sehr vielen Funktionen nutzen wie zB. Appendix, Stichwortverzeichnis, Glossar, Literaturverzeichnis und und und.
+
+\subsubsection{Fonts Bearbeiten}
+\label{sec:Fonts Bearbeiten}
+Wenn ich möchte kann ich den Text auch \textbf{Fett} machen oder \textit{Kursiv} machen. Es gibt außerdem die Möglichkeit zwischen \textrm{serifen} und \textsf{serifenlosen} Schriften zu wählen sowie eine \texttt{Typwriter Font} zu benutzen. Da serifen Schrift die Standard Schriftart ist sieht man hier keinen Unterschied.
+\subsubsection{Bilder}
+Man kann natürlich auch Bilder einfügen wie man das in Abbildung \ref{fig:TUWien Logo} sehr gut sehen kann. Da \LaTeX \; die Position des Bildes selber bestimmt, kann es sein, dass es nicht direkt unter der Überschrift ist.
+
+\begin{figure}
+	\centering
+	\includegraphics[scale=0.3]{img/logo_tuwien_with_informatics.png}
+	\caption{Eine einfache Bildunterschrift}
+	\label{fig:TUWien Logo}
+\end{figure}
+
+\section{Zu diesem Template}
+Ich habe in der Datei pages/config.tex einige Variablen definiert welche dann im Titelblatt und Fuß- unf Kopfzeile ersetzt werden. Außerdem kann man mit einigen boolean Werten gewisse Teile des Dokuments aus und einschalten.
+
+
