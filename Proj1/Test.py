@@ -5,9 +5,18 @@ Created on Nov 22, 2017
 '''
 
 from __future__ import print_function
+try:
+    from StringIO import StringIO as StringIO
+except ImportError:
+    from io import StringIO
+import cProfile
+import pstats
+try:
+    from sklearn.model_selection import train_test_split
+except ImportError:
+    from sklearn.cross_validation import train_test_split
 
 def split(X,y, n=0.8):
-    from sklearn.model_selection import train_test_split
     return train_test_split(X, y, random_state=1234, test_size=n)
 
 class Test(object):
@@ -42,15 +51,12 @@ class Test(object):
         print(recall)
         
     def run(self):
-        import cProfile
-        # cProfile.run('self.train()') #self.train()
-        # cProfile.runctx('self.train()', globals(), locals())
-        import cProfile, pstats, StringIO
         pr = cProfile.Profile()
         pr.enable()
         self.train()
         pr.disable()
-        s = StringIO.StringIO()
+        self.predict()
+        s = StringIO()
         sortby = 'cumulative'
         ps = pstats.Stats(pr, stream=s).sort_stats(sortby)
         ps.print_stats()
