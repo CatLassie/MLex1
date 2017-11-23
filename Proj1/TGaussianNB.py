@@ -14,7 +14,10 @@ class TGaussianNB(Test):
     '''
     
     def train(self):
-        model= GaussianNB()
+        gnb= GaussianNB()
         
         # train model
-        self.pred_y= model.fit(self.train_x, self.train_y).predict(self.test_x)    
+        self.model= gnb.fit(self.train_x, self.train_y)
+        
+    def predict(self):
+        self.pred_y= self.model.predict(self.test_x)    
