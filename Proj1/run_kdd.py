@@ -5,7 +5,12 @@ Created on Nov 22, 2017
 '''
 
 import pandas as pd
-from TGaussianNB import TGaussianNB
+#from TGaussianNB import TGaussianNB
+from Test import Test
+
+from sklearn.naive_bayes import GaussianNB
+from sklearn.tree import DecisionTreeClassifier as DTree
+from sklearn.svm import SVC
 
 def main(fn):
     h= open("../data/kddcup.names").read().split(".\n")
@@ -25,8 +30,19 @@ def main(fn):
     X= data[features]
     y= data['class'].apply(lambda x: labels.index(x))
     
-    h= TGaussianNB(X, y)
+    #h= TGaussianNB(X, y)
+    #h.run()
+    print("GaussianNB")
+    h= Test(X, y, GaussianNB())
     h.run()
+    print("DecisionTreeClassifier")
+    h= Test(X, y, DTree())
+    h.run()
+    # print("SVC")
+    # h= Test(X, y, SVC())
+    # h.run()
 
 if __name__ == '__main__':
-    main("../data/kddcup.data.corrected")
+    # main("../data/kddcup.data.corrected")
+    main("../data/kddcup.data_10_percent_corrected")
+
