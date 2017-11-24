@@ -4,4 +4,86 @@ We used the following datasets:
 \item DS1
 \end{itemize}
 
-\subsection{DS1}
+\section{Exp on Congr}
+No difference between gini and Information gain for Decision Tree when using all features
+
+physician-fee-freeze seems to be important as removing it from the features decreased metrics quite drastically
+
+Surprisingly, adding or removing education-spending from the features did not make a significant difference.
+
+Removing feature 'superfund-right-to-sue' slightly improved results for DT but no impact for NB.
+
+\subsection{SVM}
+
+rbf kernel
+[[ 78   3]
+ [  9 128]]
+128 3 78 9
+0.94495412844 0.94495412844 0.977099236641 2.0
+
+linear kernel
+[[ 78   3]
+ [  6 131]]
+131 3 78 6
+0.95871559633 0.95871559633 0.977611940299 2.0
+
+poly
+[[ 77   4]
+ [ 12 125]]
+125 4 77 12
+0.926605504587 0.926605504587 0.968992248062 2.0
+
+sigmoid
+[[ 76   5]
+ [  9 128]]
+128 5 76 9
+0.935779816514 0.935779816514 0.962406015038 2.0
+
+Further experiments for linear kernel
+Lowering C -> negative effect
+Changing decision function: no effect
+
+\subsection{Random Forest}
+Lower number of trees better results?
+
+\section{Experiments on Amazon}
+\subsection{SVM}
+SVC linear
+[[ 9  0  0 ...,  0  0  0]
+ [ 0 11  1 ...,  0  0  0]
+ [ 0  0 17 ...,  0  0  0]
+ ..., 
+ [ 0  0  0 ...,  9  0  0]
+ [ 0  0  0 ...,  0  7  0]
+ [ 0  0  0 ...,  0  0 16]]
+11 0 9 0
+0.50875 0.50875 0.50875 2.0
+
+SVC sigmoid
+
+[[ 0  0  7 ...,  0  0  0]
+ [ 0  0  9 ...,  0  0  0]
+ [ 0  0  5 ...,  0  0  0]
+ ..., 
+ [ 0  0 10 ...,  0  0  0]
+ [ 0  0  5 ...,  0  0  0]
+ [ 0  0  9 ...,  0  0  0]]
+0 0 0 0
+0.01 0.01 0.01 2.0
+
+SVC rbf
+[[ 7  0  0 ...,  0  0  0]
+ [ 0 10  0 ...,  0  0  0]
+ [ 0  0 15 ...,  0  0  0]
+ ..., 
+ [ 0  0  0 ...,  6  0  0]
+ [ 0  0  0 ...,  0  1  0]
+ [ 0  0  0 ...,  0  0  8]]
+10 0 7 0
+0.28125 0.28125 0.28125 2.0
+
+\section{Cancer}
+\subsection{Preprocessing}
+Two imputation strategies: imputing value as col-mean and imputing it as mean of the class. Yielded no significant difference for KNeighbors.
+However, this might be due to the small size of the dataset. 
+Additionally, when removing the five samples with missing values the performance of the algorithms increased. 
