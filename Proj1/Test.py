@@ -112,5 +112,3 @@ class Test(object):
         model= self.model.fit(self.X, self.y)
         return model.predict(X)
         
-            
-    
