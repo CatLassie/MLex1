@@ -74,7 +74,7 @@ def main(fn):
     h= Test(X, y, KNeighborsClassifier(n_neighbors=10))
     h.run()
     
-    parameters= [{'n_estimators':range(5,15), 'criterion':['gini','entropy']}]
+    parameters= [{'n_estimators':range(1,15), 'criterion':['gini','entropy']}]
     s= Search(X, y, RandomForestClassifier(), parameters)
     s.search()
     s.report()

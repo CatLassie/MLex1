@@ -14,8 +14,8 @@ class Search:
         self.model= model
         self.parameters= parameters
     
-    def search(self):
-        self.clf= GridSearchCV(self.model, self.parameters, cv=10)
+    def search(self, metric='accuracy'):
+        self.clf= GridSearchCV(self.model, self.parameters, cv=10, scoring=metric)
         self.clf.fit(self.X, self.y)
         
     def report(self):
@@ -24,7 +24,7 @@ class Search:
         
         print(confusion)
         
-        print(self.clf.get_params())
+        print(self.clf.best_params_)
         
         rec= metrics.recall_score(self.y, pred_y, average='macro')
         acc= metrics.accuracy_score(self.y, pred_y, normalize=True)
@@ -32,8 +32,8 @@ class Search:
             prec= metrics.precision_score(self.y, pred_y)
         else:
             prec= metrics.precision_score(self.y, pred_y, average='macro')
-        f1= 2 * ( prec * rec) / (prec+rec)
-        print(rec, acc, prec, f1)
+        f= metrics.precision_recall_fscore_support(self.y, pred_y, average='macro') 
+        print(rec, acc, prec, f)
 
     def predict(self, X):
         return self.clf.predict(X)

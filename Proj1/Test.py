@@ -71,20 +71,6 @@ class Test(object):
         TN= confusion[0, 0]
         FN= confusion[1, 0]
         print(confusion)
-#         if type == 'binary':
-#             TP= confusion[1, 1]
-#             FP= confusion[0, 1]
-#             TN= confusion[0, 0]
-#             FN= confusion[1, 0]
-#         else:
-#             TP= 0
-#             TP= sum([confusion[i, i] for i in range(0, len(self.X))])
-#             FP= 0
-#             TN= 0
-#             FN= 0
-#             for i in range(0, len(self.X)):
-#                 for j in range(0, len(self.X)):
-#                     if i != j:
                         
         print(TP, FP, TN, FN)
         
@@ -94,8 +80,8 @@ class Test(object):
             prec= metrics.precision_score(y, pred_y)
         else:
             prec= metrics.precision_score(y, pred_y, average='macro')
-        f1= 2 * ( prec * rec) / (prec*rec)
-        print(rec, acc, prec, f1)
+        f= metrics.precision_recall_fscore_support(y, pred_y, average='macro') 
+        print(rec, acc, prec, f)
         
         # recall= metrics.recall_score(self.y, self.pred_y)
         # print(recall)
