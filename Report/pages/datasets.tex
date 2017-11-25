@@ -1,10 +1,12 @@
 \section{Datasets}
 We used the following datasets:
 \begin{itemize}
-\item DS1
+\item Congress (Kaggle)
+\item Amazon (Kaggle)
+\item Lung Cancer
 \end{itemize}
 
-\section{Exp on Congr}
+\section{Experiments on Congress}
 No difference between gini and Information gain for Decision Tree when using all features
 
 physician-fee-freeze seems to be important as removing it from the features decreased metrics quite drastically
@@ -83,7 +85,12 @@ SVC rbf
 0.28125 0.28125 0.28125 2.0
 
 \section{Cancer}
+\url{https://archive.ics.uci.edu/ml/datasets/Lung+Cancer}
+
 \subsection{Preprocessing}
 Two imputation strategies: imputing value as col-mean and imputing it as mean of the class. Yielded no significant difference for KNeighbors.
 However, this might be due to the small size of the dataset. 
 Additionally, when removing the five samples with missing values the performance of the algorithms increased. 
+
+\section{KDD Cup 99}
+\url{https://archive.ics.uci.edu/ml/datasets/KDD+Cup+1999+Data}
