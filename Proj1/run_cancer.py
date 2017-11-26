@@ -70,22 +70,11 @@ def main(fn):
     h= Test(X, y, DTree())
     h.run()
     
+    parameters=[{'kernel' : ['linear','sigmoid', 'rbf', 'poly']}]
     print("SVC")
-    h= Test(X, y, SVC(kernel='linear', random_state=1234))
-    h.run()
-     
-    print("SVC")
-    h = Test(X, y, SVC(kernel='sigmoid', random_state=1234))
-    h.run()
-     
-    print("SVC")
-    h = Test(X, y, SVC(kernel='rbf', random_state=1234))
-    h.run()
-    
-    print("SVC")
-    h = Test(X, y, SVC(kernel='poly', random_state=1234))
-    h.run()
-    
+    s= Search(X, y, SVC(), parameters)
+    s.search()
+    s.report("../Report/results/cancer.svm.tex")
     
     print("RF")
     h= Test(X, y, RandomForestClassifier(n_estimators=8,random_state=1234))
@@ -96,7 +85,7 @@ def main(fn):
     parameters= [{'n_neighbors' : range(1, 10), 'weights':['uniform', 'distance'], 'p':[1, 2]}]
     s= Search(X, y, KNeighborsClassifier(), parameters)
     s.search()
-    s.report()
+    s.report("../Report/results/cancer.knn.tex")
 
 if __name__ == '__main__':
     # main("../data/kddcup.data.corrected")

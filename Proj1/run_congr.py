@@ -71,13 +71,18 @@ def main(fn):
     h.run()
 
     print("KNeighborsClassifier")
-    h= Test(X, y, KNeighborsClassifier(n_neighbors=10))
-    h.run()
+#     h= Test(X, y, KNeighborsClassifier(n_neighbors=10))
+#     h.run()
+    parameters= [{'n_neighbors':range(1,10)}]
+    s= Search(X, y, KNeighborsClassifier(), parameters)
+    s.search()
+    s.report("../Report/results/congress.knn.tex")
+    
     
     parameters= [{'n_estimators':range(1,15), 'criterion':['gini','entropy']}]
     s= Search(X, y, RandomForestClassifier(), parameters)
     s.search()
-    s.report()
+    s.report("../Report/results/congress.rf.tex")
     
     o= pd.read_csv("../data/CongressionalVotingID.shuf.test.csv")
     transform(o)
