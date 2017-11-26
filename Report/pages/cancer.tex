@@ -1,0 +1,25 @@
+\section{Cancer}
+\url{https://archive.ics.uci.edu/ml/datasets/Lung+Cancer}
+
+\subsection{Preprocessing}
+Two imputation strategies: imputing value as col-mean and imputing it as mean of the class. Yielded no significant difference for KNN.
+However, this might be due to the small size of the dataset. 
+Additionally, when removing the five samples with missing values the performance of the algorithms increased. 
+
+\subsection{SVM}
+\begin{table}[tb]
+\centering
+%\resizebox{\linewidth}{!}{
+%\tiny{\input{results/cancer.svm}}}
+\input{results/cancer.svm}
+\caption{Cancer - SVM}
+\end{table}
+
+\subsection{KNN}
+\begin{table}[tb]
+\centering
+%\resizebox{\linewidth}{!}{
+%\tiny{\input{results/cancer.knn}}}
+\input{results/cancer.knn}
+\caption{Cancer - kNN}
+\end{table}
