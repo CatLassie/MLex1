@@ -34,6 +34,8 @@ class Test(object):
         '''
         Constructor
         '''
+        self.lblFun= None
+        
         self.X= X
         self.y= y
         # self.train_x, self.test_x, self.train_y, self.test_y= split(X,y)
@@ -57,7 +59,7 @@ class Test(object):
             self.splits[x]= test_idx
             x+= 1
     
-    def report(self, x= -1):
+    def report(self, x= -1, fn=None):
         if x == -1:
             y= self.y
             pred_y= self.pred_y
@@ -83,8 +85,42 @@ class Test(object):
         f= metrics.precision_recall_fscore_support(y, pred_y, average='macro') 
         print(rec, acc, prec, f)
         
-        # recall= metrics.recall_score(self.y, self.pred_y)
-        # print(recall)
+        self.confusion= confusion
+        self.writeConfusion(fn)
+    
+        
+    def writeConfusion(self, fn=None):
+        if fn == None:
+            return
+        
+        print("writing confusion", fn)
+        
+        self.labels= list(self.y.unique())
+        if self.lblFun == None:
+            self.lblFun= lambda x: str(x)
+        classes= [self.lblFun(l) for l in self.labels]
+        
+        out= open(fn,'w')
+        
+        out.write("\\begin{tabular}{l|" + (len(classes)*"c") + "}\n")
+        out.write("\\toprule\n") 
+        out.write("&")
+        out.write(" & ".join(["\\textbf{" + c.replace("_", "\_") + "}" for c in classes]))
+        out.write("\\\\\n")
+        out.write("\\midrule\n") 
+        
+        i= 0
+        for row in self.confusion:
+            c= classes[i]
+            out.write("\\textbf{" + c.replace("_", "\_") + "} & ")
+            out.write(" & ".join([str(i) for i in row]))
+            out.write("\\\\\n")
+            i+= 1
+            
+        out.write("\\bottomrule\n")
+        out.write("\\end{tabular}\n")
+        
+        out.close()
         
     def run_old(self):
         pr = cProfile.Profile()

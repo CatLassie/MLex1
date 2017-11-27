@@ -9,22 +9,27 @@ class Search:
         '''
         Constructor
         '''
+        self.lblFun= None
+        
         self.X= X
         self.y= y
         self.model= model
         self.parameters= parameters
     
-    def search(self, metric='accuracy'):
-        self.clf= GridSearchCV(self.model, self.parameters, cv=10, scoring=metric)
+    def search(self, metric='accuracy', cv=10):
+        self.clf= GridSearchCV(self.model, self.parameters, cv=cv, scoring=metric)
         self.clf.fit(self.X, self.y)
         
-    def report(self, tblfn=None):
+    def report(self, tblfn=None, cmfn=None):
         pred_y= self.clf.predict(self.X)
-        confusion= metrics.confusion_matrix(self.y, pred_y)
+        self.labels= list(self.y.unique())
+        confusion= metrics.confusion_matrix(self.y, pred_y, labels= self.labels)
         
         print(confusion)
+        self.confusion= confusion
         
         self.writeResultsTbl(tblfn)
+        self.writeConfusion(cmfn)
         
         print(self.clf.best_params_)
         
@@ -40,6 +45,42 @@ class Search:
     def predict(self, X):
         return self.clf.predict(X)
     
+    def labelFun(self, fun):
+        self.lblFun= fun
+    
+    def writeConfusion(self, fn=None):
+        if fn == None:
+            return
+        
+        print("writing confusion", fn)
+        
+        print(self.lblFun)
+        if self.lblFun == None:
+            self.lblFun= lambda x: str(x)
+        classes= [self.lblFun(l) for l in self.labels]
+        
+        out= open(fn,'w')
+        
+        out.write("\\begin{tabular}{l|" + (len(classes)*"c") + "}\n")
+        out.write("\\toprule\n") 
+        out.write("&")
+        out.write(" & ".join(["\\textbf{" + c.replace("_", "\_") + "}" for c in classes]))
+        out.write("\\\\\n")
+        out.write("\\midrule\n") 
+        
+        i= 0
+        for row in self.confusion:
+            c= classes[i]
+            out.write("\\textbf{" + c.replace("_", "\_") + "} & ")
+            out.write(" & ".join([str(i) for i in row]))
+            out.write("\\\\\n")
+            i+= 1
+            
+        out.write("\\bottomrule\n")
+        out.write("\\end{tabular}\n")
+        
+        out.close()
+        
     def writeResultsTbl(self, fn=None):
         if fn == None:
             return
@@ -63,8 +104,11 @@ class Search:
         out.write("\\midrule\n") 
         data= zip(self.clf.cv_results_['params'], self.clf.cv_results_['mean_fit_time'],self.clf.cv_results_['std_fit_time'],
                          self.clf.cv_results_['mean_test_score'], self.clf.cv_results_['std_test_score'])
-        key= ps[0]
-        sort= sorted(data, key= lambda k: k[0][key])
+        if len(ps) > 0:
+            key= ps[0]
+            sort= sorted(data, key= lambda k: k[0][key])
+        else:
+            sort= data
         for p,tm,ts,sm,ss in sort:
             pc= " & ".join([str(p[k]) for k in ps])
             s= "{4} & ${0:.2f} \\pm {1:.2f}$ & ${2:.2f} \\pm {3:.2f}$\\\\".format(tm*scale,ts*scale, sm, ss,pc)
