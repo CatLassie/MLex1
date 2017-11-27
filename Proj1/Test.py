@@ -59,6 +59,9 @@ class Test(object):
             self.splits[x]= test_idx
             x+= 1
     
+    def labelFun(self, fun):
+        self.lblFun= fun
+    
     def report(self, x= -1, fn=None):
         if x == -1:
             y= self.y
