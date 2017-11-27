@@ -1,0 +1,47 @@
+\section{Amazon}
+Since the dataset had not much descriptive information we used all features for our classification experiments.
+A deeper analysis of the experiments would have been necessary in order to improve the low quality results we obtained.
+
+\subsection{GNB}
+The execution time for GNB was $520.70 \pm 18.80$ ms with an average accuracy of $0.34 \pm 0.05$.
+
+\subsection{Decision Tree \& Random Forest}
+The difficulty of the dataset manifests itself in the fact that our attempts at classification using decision trees proved futile.
+The best results we could obtain had an accuracy of $0.17 \pm 0.04$.
+Those results were obtained using Gini Impurity with either the square root of the number of features or no constraint on the number of features to be considered during the splits. 
+ 
+In our experiments decision trees and random forests showed similar classification performance with a slight advantage (one error less) for decision trees. 
+A list of tested parameters and their results is outlined in table~\ref{tbl:congress.dt}
+The best results for decision trees were obtained when using Gini Impurity and $\log$ of features for the maximum amount of features to be considered for the split.
+For random forests had Gini Impurity as criterion too but with no constraint on the maximum amount of features for the splits ('max\_features'='auto') and the number of estimators set to $11$. 
+
+\begin{table}[htb]
+\centering
+\input{results/amazon.dt}
+\caption{Results for Amazon using decision trees}
+\label{tbl:amazon.dt}
+\end{table}
+
+\subsection{SVM}
+When testing different kernels we experienced that polynomial kernels were outperformed by almost all other settings.
+Changing $C$ did bring further improvements.
+We tested the SVM using a wide range of parameters for $C$ and $\gamma$.
+Some of the results for the tested parameter combinations are outlined in table~\ref{tbl:amazon.svm}
+
+\begin{table}[hbt]
+\centering
+\input{results/amazon.svm}
+\caption{Results for Amazon using SVM}
+\label{tbl:amazon.svm}
+\end{table}
+
+
+\subsection{kNN}
+Our experiments yielded the best results when setting neighbours to $6$, using 'distance' as weighting function while the distance function seemed to have not much impact. 
+A detailed list of results is given in table~\ref{tbl:congress.knn}. 
+\begin{table}[htb]
+\centering
+\input{results/amazon.knn}
+\caption{Results for Amazon using kNN}
+\label{tbl:amazon.knn}
+\end{table}

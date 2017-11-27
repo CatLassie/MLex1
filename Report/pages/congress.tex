@@ -1,53 +1,48 @@
 \section{Experiments on Congress}
-No difference between gini and Information gain for Decision Tree when using all features
+% No difference between gini and Information gain for Decision Tree when using all features
+Our early experiments showed the following facts
+\begin{itemize}
+\item physician-fee-freeze seems to be important as removing it from the features decreased metrics quite drastically
+\item Surprisingly, adding or removing education-spending from the features did not make a significant difference.
+\item Removing feature 'superfund-right-to-sue' slightly improved results for decision trees but no impact for GNB.
+\item Removing feature 'water-project-cost-sharing' seemed to improve results further.
+\end{itemize}
 
-physician-fee-freeze seems to be important as removing it from the features decreased metrics quite drastically
+\subsection{GNB}
+The execution time for GNB was $1.22 \pm 0.08$ ms with an average accuracy of $0.94 \pm 0.05$.
 
-Surprisingly, adding or removing education-spending from the features did not make a significant difference.
+\subsection{Decision Tree \& Random Forest}
+In our experiments decision trees and random forests showed similar classification performance with a slight advantage (one error less) for decision trees. 
+A list of tested parameters and their results is outlined in table~\ref{tbl:congress.dt}
+The best results for decision trees were obtained when using Gini Impurity and $\log$ of features for the maximum amount of features to be considered for the split.
+For random forests had Gini Impurity as criterion too but with no constraint on the maximum amount of features for the splits ('max\_features'='auto') and the number of estimators set to $11$. 
 
-Removing feature 'superfund-right-to-sue' slightly improved results for DT but no impact for NB.
+Decision trees turned out to be our best approach for this classification task. The confusion matrix for the training data can be found in table~\ref{tbl:congress.dt.cm}
+
+\begin{table}[tb]
+\centering
+\input{results/congress.dt}
+\caption{Results for Congress using decision trees}
+\label{tbl:congress.dt}
+\end{table}
+
+\begin{table}[tb]
+\centering
+\input{results/congress.dt.cm}
+\caption{Confusion matrix for Congress using decision trees}
+\label{tbl:congress.dt.cm}
+\end{table}
 
 \subsection{SVM}
+We tested all available kernel and various different combinations for $C$ and $\gamma$. 
+The best results were achieved when using a radial basis function as kernel and $C$ set to a number around $100$
 
-rbf kernel
-[[ 78   3]
- [  9 128]]
-128 3 78 9
-0.94495412844 0.94495412844 0.977099236641 2.0
-
-linear kernel
-[[ 78   3]
- [  6 131]]
-131 3 78 6
-0.95871559633 0.95871559633 0.977611940299 2.0
-
-poly
-[[ 77   4]
- [ 12 125]]
-125 4 77 12
-0.926605504587 0.926605504587 0.968992248062 2.0
-
-sigmoid
-[[ 76   5]
- [  9 128]]
-128 5 76 9
-0.935779816514 0.935779816514 0.962406015038 2.0
-
-Further experiments for linear kernel
-Lowering C -> negative effect
-Changing decision function: no effect
-
-\subsection{KNN}
+\subsection{kNN}
+Our experiments yielded the best results when setting neighbours to $6$, using 'distance' as weighting function while the distance function seemed to have not much impact. 
+A detailed list of results is given in table~\ref{tbl:congress.knn}. 
 \begin{table}[tb]
 \centering
 \input{results/congress.knn}
-\caption{Congress - KNN}
-\end{table}
-
-\subsection{Random Forest}
-Lower number of trees better results?
-\begin{table}[tb]
-\centering
-\input{results/congress.rf}
-\caption{Congress - Random Forest}
+\caption{Results for Congress using kNN}
+\label{tbl:congress.knn}
 \end{table}

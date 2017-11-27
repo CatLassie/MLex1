@@ -1,25 +1,46 @@
 \section{Cancer}
-\url{https://archive.ics.uci.edu/ml/datasets/Lung+Cancer}
+This dataset is interesting for one aspect: it has no descriptive information i.e. neither the classes nor the columns have meaningful attributes. 
+Literature reports best results for kNN algorithms. However, we found better results for SVMs which would contradict these results.
+However, the SVM could not be validated against unseen data. 
+Moreover, the are a discrepancies with missing values, as will be described in the next section. 
+Throughout our experiments it became clear that type $2$ is hard to distinguish from $1$ and $2$ as the its corresponding rows in the confusion matrices showed more values than just in the diagonal. Additionally, it seems that there is a slight tendency that $2$ is misclassified as $1$ for our tested algorithms and parameter combinations. 
 
 \subsection{Preprocessing}
 Two imputation strategies: imputing value as col-mean and imputing it as mean of the class. Yielded no significant difference for KNN.
 However, this might be due to the small size of the dataset. 
-Additionally, when removing the five samples with missing values the performance of the algorithms increased. 
+Additionally, when removing the five samples with missing values the performance (accuracy) of most algorithms increased. 
+
+For the experiments we imputed missing values using the class average. 
+
+\subsection{GNB}
+The execution time for GNB was $1.73 \pm 0.10$ ms with an average accuracy of $0.47 \pm 0.17$.
+
+\subsection{Decision Tree \& Random Forest}
+In our experiments we tried different combinations for the criterion (Information Gain vs Gini Impurity) and maximum features as well as the maximal number of estimators for random forests.
+The experiments yielded the best performance for decision trees when using log while random forests performed best when using sqrt. 
 
 \subsection{SVM}
-\begin{table}[tb]
+Our initial tests included the following kernels: 'linear','sigmoid', 'rbf', 'poly'. 
+In our experiments we were unable to tune the 'gamma' parameter in order to obtain better results than those obtained when using the default parameter.
+The best results for the SVM using a polynomial kernel with $C=11$ an accuracy of $0.53 \pm 0.17$ using $0.58 \pm 0.01$ ms as runtime. 
+
+\subsection{kNN}
+We experimented with different parameters and varied the neighbours from $1$ to $20$. 
+Additionally, the $2x2$ combinations for the weights and distance functions. 
+In our experiments lower values for neighbours yielded better results. 
+The best results were obtained using $5$ neighbours with uniform weights and euclidean distance which yielded an accuracy of $0.59 \pm 0.30$ using $1.22 \pm 0.10$ ms runtime. 
+An evaluation of some tested parameters is outlined in table~\ref{tbl:cancer.knn} and while confusion matrix for our final result is outlined in table~\ref{tbl:cancer.knn.cm}.
+
+\begin{table}[htb]
 \centering
-%\resizebox{\linewidth}{!}{
-%\tiny{\input{results/cancer.svm}}}
-\input{results/cancer.svm}
-\caption{Cancer - SVM}
+\input{results/cancer.knn}
+\caption{Cancer Results using kNN}
+\label{tbl:cancer.knn}
 \end{table}
 
-\subsection{KNN}
-\begin{table}[tb]
+\begin{table}[hbt]
 \centering
-%\resizebox{\linewidth}{!}{
-%\tiny{\input{results/cancer.knn}}}
-\input{results/cancer.knn}
-\caption{Cancer - kNN}
+\input{results/cancer.knn.cm}
+\caption{Confusion Matrix for Cancer - kNN}
+\label{tbl:cancer.knn.cm}
 \end{table}

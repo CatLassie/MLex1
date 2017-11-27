@@ -1,0 +1,63 @@
+\section{KDD cup}
+We used accuracy as metric for optimisation. A better approach might have been to optimise the classification for the correct prediction of 'normal' access vs. malicious access. 
+
+We started by selecting the following features: duration, protocol\_type, src\_bytes,dst\_bytes,
+               wrong\_fragment,
+               urgent,
+               hot,
+               logged\_in,
+               num\_compromised,
+               root\_shell,
+               su\_attempted,
+               num\_root.
+Later we added the features flag and land. 
+
+\subsection{Preprocessing}
+Nominal variables, like protocol\_type, were converted into continuous variables as preprocessing. 
+Since some classes contained only few attributes the classes 'land.', 'warezmaster.', 'imap.', 'rootkit.', 'loadmodule.', 'ftp\_write.', 'multihop.', 'phf.', 'perl.' and 'spy.' were recoded to class 'other'.
+Additionally, the classes 'ipsweep.','portsweep.' and 'nmap.' were recoded as 'scan'. 
+
+\subsection{GNB}
+The execution time for GNB was $6.08 \pm 0.45$ s with an average accuracy of $0.92 \pm 0.04$.
+
+\subsection{Decision trees \& Random Forests}
+% For decision trees we found no 'significant'\footnote{We did not perform actual tests on the values but all had the same mean.} differences when varying the parameters of maximum features and split function (Gini Impurity vs Information Gain) as can be seen in table~\ref{tbl:kdd.dt} and table~\ref{tbl:kdd.dt.cm}. 
+For decision trees we found the best parameters to be using Gini Impurity as split function in combination with using the logarithm of the number of features as maximium number to be used for splits. 
+The results of our experiments can be found in table~\ref{tbl:kdd.dt}.
+Table~\ref{tbl:kdd.dt.cm} outlines the obtained confusion matrix. 
+
+For random forests we were not able to find a 'correlation' between algorithm parameters and the performance of the algorithm. 
+However, it seemed again Gini Impurity was favourable over Information Gain. 
+The results of some of the experiments are outline in table~\ref{tbl:kdd.rf}. 
+
+\begin{table}[htb]
+\centering
+\input{results/kdd.dt}
+\caption{KDD results using decision trees}
+\label{tbl:kdd.dt}
+\end{table}
+
+\begin{table}[htb]
+\centering
+\input{results/kdd.rf}
+\caption{KDD results using random forests}
+\label{tbl:kdd.rf}
+\end{table}
+
+\begin{table}[hbt]
+\centering
+\resizebox{\linewidth}{!}{\input{results/kdd.dt.cm}}
+\caption{KDD confusion matrix using decision trees}
+\label{tbl:kdd.dt.cm}
+\end{table}
+
+\subsection{SVM}
+SVMs turned out be computationally expensive. 
+Consequently, most experiments were only performed on the $10\%$ dataset and using only a $2$ fold cross validation. 
+Nevertheless, SVM turned out to be not applicable to the dataset as no parameter setting gave results within a waiting period of several hours. 
+Similar to the other datasets we tried varying kernels, $C$ and $\gamma$. 
+
+\subsection{kNN}
+Similar to SVMs kNN turned out be computationally expensive. 
+Consequently, most experiments were only performed on the $10\%$ dataset. 
+Additionally, like for the SVM no meaningful results could be obtained. 

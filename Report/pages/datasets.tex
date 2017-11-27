@@ -3,45 +3,21 @@ We used the following datasets:
 \begin{itemize}
 \item Congress (Kaggle)
 \item Amazon (Kaggle)
-\item Lung Cancer
+\item KDD Cup 99 (\url{https://archive.ics.uci.edu/ml/datasets/KDD+Cup+1999+Data})
+\item Lung Cancer (\url{https://archive.ics.uci.edu/ml/datasets/Lung+Cancer})
 \end{itemize}
 
-\section{Experiments on Amazon}
-\subsection{SVM}
-SVC linear
-[[ 9  0  0 ...,  0  0  0]
- [ 0 11  1 ...,  0  0  0]
- [ 0  0 17 ...,  0  0  0]
- ..., 
- [ 0  0  0 ...,  9  0  0]
- [ 0  0  0 ...,  0  7  0]
- [ 0  0  0 ...,  0  0 16]]
-11 0 9 0
-0.50875 0.50875 0.50875 2.0
+\section{Aproach \& Algorithms}
+We performed our experiments using Python and Sklearn. Most of the experiments were performed on a Lenovo T420 while some of the more intense computations were performed on a server with a Intel(R) Xeon(R) CPU E5-2680 v2 and $\sim 160$ GB RAM. 
 
-SVC sigmoid
+In our experiments compared the following algorithms from the library:
+\begin{itemize}
+\item Gaussian Naive Bayes (GNB)
+\item Decision Tree \& Random Forest
+\item SVM (\verb|svm.SVC|)
+\item \verb|KNeighborsClassifier| (kNN)
+\end{itemize}
 
-[[ 0  0  7 ...,  0  0  0]
- [ 0  0  9 ...,  0  0  0]
- [ 0  0  5 ...,  0  0  0]
- ..., 
- [ 0  0 10 ...,  0  0  0]
- [ 0  0  5 ...,  0  0  0]
- [ 0  0  9 ...,  0  0  0]]
-0 0 0 0
-0.01 0.01 0.01 2.0
+Unless stated otherwise, we tested the algorithms using $10-$fold cross validation. 
 
-SVC rbf
-[[ 7  0  0 ...,  0  0  0]
- [ 0 10  0 ...,  0  0  0]
- [ 0  0 15 ...,  0  0  0]
- ..., 
- [ 0  0  0 ...,  6  0  0]
- [ 0  0  0 ...,  0  1  0]
- [ 0  0  0 ...,  0  0  8]]
-10 0 7 0
-0.28125 0.28125 0.28125 2.0
-
-
-\section{KDD Cup 99}
-\url{https://archive.ics.uci.edu/ml/datasets/KDD+Cup+1999+Data}
+All data was scaled using the corresponding function from numpy. 
