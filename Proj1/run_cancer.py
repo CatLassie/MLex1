@@ -51,9 +51,9 @@ def main(fn):
     # data= pd.read_csv("../data/kddcup.data_10_percent_corrected", names=cols)
     data= pd.read_csv(fn, header=-1)
     
-    data= remove_missing(data)
+    # data= remove_missing(data)
     # data= impute_missing(data)
-    # data= impute_missing2(data)       
+    data= impute_missing2(data)       
     
     # Features to be used in classification
     features= [x for x in range(1, len(data.columns))]
@@ -66,26 +66,47 @@ def main(fn):
     print("GaussianNB")
     h= Test(X, y, GaussianNB())
     h.run()
-    print("DecisionTreeClassifier")
-    h= Test(X, y, DTree())
-    h.run()
+    h.report(fn="../Report/results/cancer.gnb.cm.tex")
+    s= Search(X, y, SVC(), [{}])
+    s.search()
+    s.report("../Report/results/cancer.gnb.tex")
     
-    parameters=[{'kernel' : ['linear','sigmoid', 'rbf', 'poly']}]
-    print("SVC")
-    s= Search(X, y, SVC(), parameters)
+    print("DTree neu")
+    parameters=[{'criterion' :['gini', 'entropy'], 'max_features': ['auto', 'sqrt', 'log2']}]
+    s= Search(X, y, DTree(), parameters)
+    s.search()
+    s.report("../Report/results/cancer.dt.tex")
+    h= Test(X, y, DTree(max_features='log2',criterion='gini',random_state=1234))
+    h.run()
+    h.report(fn="../Report/results/cancer.dt.cm.tex")
+    print("RF")
+    parameters= [{'n_estimators' : range(1, 15), 'criterion' :['gini', 'entropy'], 'max_features': ['auto', 'sqrt', 'log2']}]
+    s= Search(X, y, RandomForestClassifier(), parameters)
+    s.search()
+    s.report("../Report/results/cancer.rf.tex", )
+    h= Test(X, y, RandomForestClassifier(n_estimators= 6, criterion='gini', max_features='sqrt',random_state=1234))
+    h.run()
+    h.report(fn="../Report/results/cancer.rf.cm.tex")
+    
+    parameters=[{'kernel' : ['linear','sigmoid', 'rbf', 'poly'], 'C' : [0.1, 1, 10, 11, 20]}]
+    print("SVM")
+    from sklearn import preprocessing
+    X_scaled = preprocessing.scale(X)
+    s= Search(X_scaled, y, SVC(), parameters)
     s.search()
     s.report("../Report/results/cancer.svm.tex")
-    
-    print("RF")
-    h= Test(X, y, RandomForestClassifier(n_estimators=8,random_state=1234))
+    h= Test(X, y, SVC(C=11, kernel='poly'))
     h.run()
+    h.report(fn="../Report/results/cancer.svm.cm.tex")
+    
     print("KNeighborsClassifier")
-    #h= Test(X, y, KNeighborsClassifier(n_neighbors=1))
-    #h.run()
-    parameters= [{'n_neighbors' : range(1, 10), 'weights':['uniform', 'distance'], 'p':[1, 2]}]
+    parameters= [{'n_neighbors' : range(4, 8), 'weights':['uniform', 'distance'], 'p':[1, 2]}]
     s= Search(X, y, KNeighborsClassifier(), parameters)
     s.search()
     s.report("../Report/results/cancer.knn.tex")
+    h= Test(X, y, KNeighborsClassifier(n_neighbors=5, weights='uniform', p=2))
+    h.run()
+    h.report(fn="../Report/results/cancer.knn.cm.tex")
 
 if __name__ == '__main__':
     # main("../data/kddcup.data.corrected")
