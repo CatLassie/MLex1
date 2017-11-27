@@ -5,7 +5,8 @@ Created on Nov 22, 2017
 '''
 
 import pandas as pd
-#from TGaussianNB import TGaussianNB
+
+from Search import Search
 from Test import Test
 
 from sklearn.naive_bayes import GaussianNB
@@ -26,7 +27,21 @@ def main(fn):
     # 'rerror_rate','same_srv_rate','diff_srv_rate','srv_count','srv_serror_rate','srv_rerror_rate','srv_diff_host_rate']
     
     # Features to be used in classification
-    features= ['duration', 'src_bytes', 'dst_bytes', 'wrong_fragment', 'urgent', 'hot', 'logged_in', 'num_compromised', 'root_shell', 'su_attempted', 'num_root']
+    features= ['duration', 
+               'protocol_type',
+               'src_bytes',
+               'dst_bytes',
+               'wrong_fragment',
+               'urgent',
+               'hot',
+               'logged_in',
+               'num_compromised',
+               'root_shell',
+               'su_attempted',
+               'num_root']
+    
+    vals= list(data['protocol_type'].unique())
+    data['protocol_type']= data['protocol_type'].apply(lambda x: vals.index(x))
     
     X= data[features]
     y= data['class'].apply(lambda x: labels.index(x))
@@ -36,35 +51,41 @@ def main(fn):
     print("GaussianNB")
     h= Test(X, y, GaussianNB())
     h.run()
+    
     print("DecisionTreeClassifier")
     h= Test(X, y, DTree())
     h.run()
     
-    print("SVC")
-    h= Test(X, y, SVC(kernel='linear', random_state=1234))
-    h.run()
-     
-    print("SVC")
-    h = Test(X, y, SVC(kernel='sigmoid', random_state=1234))
-    h.run()
-     
-    print("SVC")
-    h = Test(X, y, SVC(kernel='rbf', random_state=1234))
-    h.run()
-    
-    print("SVC")
-    h = Test(X, y, SVC(kernel='poly', random_state=1234))
-    h.run()
+    print("SVM")
+    from sklearn import preprocessing
+    X_scaled = preprocessing.scale(X)
+    parameters=[{'kernel' : ['linear','sigmoid', 'rbf', 'poly']}]
+    s= Search(X_scaled, y, SVC(), parameters)
+    s.search()
+    s.report("../Report/results/kdd.svm.pre.tex")
+    s= Search(X, y, SVC(), parameters)
+    s.search()
+    s.report("../Report/results/kdd.svm.tex")
     
     print("RF")
-    h= Test(X, y, RandomForestClassifier(n_estimators=8,random_state=1234))
-    h.run()
+#     h= Test(X, y, RandomForestClassifier(n_estimators=8,random_state=1234))
+#     h.run()
+    parameters= [{'n_estimators':range(1,10)}]
+    s= Search(X, y, KNeighborsClassifier(), parameters)
+    s.search()
+    s.report("../Report/results/kdd.rf.tex")
  
     print("KNeighborsClassifier")
-    h= Test(X, y, KNeighborsClassifier(n_neighbors=10))
-    h.run()
+    parameters= {'n_neighbors':range(1,10), 'p':[1,2]}
+    s= Search(X, y, KNeighborsClassifier(), parameters)
+    s.search()
+    s.labelFun(lambda x: labels[x])
+    s.report("../Report/results/kdd.knn.tex")
 
 if __name__ == '__main__':
     # main("../data/kddcup.data.corrected")
+    # main("../data/kddcup.data.corrected")
+    print("alles neu")
+    # main("../data/kddcup.data_10_percent_corrected")
     main("../data/kddcup.data.corrected")
 

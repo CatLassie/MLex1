@@ -42,22 +42,27 @@ class Test(object):
         self.model= model
         self.type= type
     
-    def train(self):
-        k_fold= KFold(n_splits=10)
+    def train(self, full=False, k=10):
+        k_fold= KFold(n_splits=k)
         # res= cross_validate(self.model, self.X, self.y, cv=k_fold, n_jobs=-1)
         # print(res)
         self.pred_y= cross_val_predict(self.model, self.X, self.y, cv=k_fold)
-        self.pred_yy= np.empty([len(self.y), 1])
-        x= 0
-        self.models= {}
-        self.splits= {}
-        for train_idx, test_idx in k_fold.split(self.X):
-            #print(self.y[train_idx])
-            model= self.model.fit(self.X.iloc[train_idx], self.y.iloc[train_idx])
-            self.pred_yy[test_idx, 0]= model.predict(self.X.iloc[test_idx])
-            self.models[x]= model
-            self.splits[x]= test_idx
-            x+= 1
+        
+        if full == True:
+            self.pred_yy= np.empty([len(self.y), 1])
+            x= 0
+            self.models= {}
+            self.splits= {}
+            for train_idx, test_idx in k_fold.split(self.X):
+                if type(self.X) == np.ndarray:
+                    train= self.X[train_idx]
+                else:
+                    train= self.X.iloc[train_idx]
+                model= self.model.fit(train, self.y.iloc[train_idx])
+                self.pred_yy[test_idx, 0]= model.predict(self.X.iloc[test_idx])
+                self.models[x]= model
+                self.splits[x]= test_idx
+                x+= 1
     
     def labelFun(self, fun):
         self.lblFun= fun
@@ -71,13 +76,13 @@ class Test(object):
             pred_y= self.pred_yy[self.splits[x], 0]
         
         confusion= metrics.confusion_matrix(y, pred_y)
-        TP= confusion[1, 1]
-        FP= confusion[0, 1]
-        TN= confusion[0, 0]
-        FN= confusion[1, 0]
+#         TP= confusion[1, 1]
+#         FP= confusion[0, 1]
+#         TN= confusion[0, 0]
+#         FN= confusion[1, 0]
         print(confusion)
                         
-        print(TP, FP, TN, FN)
+#         print(TP, FP, TN, FN)
         
         rec= metrics.recall_score(y, pred_y, average='macro')
         acc= metrics.accuracy_score(y, pred_y, normalize=True)
@@ -110,7 +115,7 @@ class Test(object):
         out.write("&")
         out.write(" & ".join(["\\textbf{" + c.replace("_", "\_") + "}" for c in classes]))
         out.write("\\\\\n")
-        out.write("\\midrule\n") 
+        out.write("\\midrule\n")
         
         i= 0
         for row in self.confusion:

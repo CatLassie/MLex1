@@ -67,7 +67,7 @@ def main(fn):
     h= Test(X, y, GaussianNB())
     h.run()
     h.report(fn="../Report/results/cancer.gnb.cm.tex")
-    s= Search(X, y, SVC(), [{}])
+    s= Search(X, y, GaussianNB(), [{}])
     s.search()
     s.report("../Report/results/cancer.gnb.tex")
     
