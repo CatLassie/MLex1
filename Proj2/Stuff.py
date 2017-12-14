@@ -6,7 +6,7 @@ Created on Dec 12, 2017
 
 import matplotlib.pyplot as plt
 
-def plot_corr(df, fn, size=11):
+def plot_corr(df, fn=None, size=11):
     """
     Function plots a graphical correlation matrix for each pair of columns in the dataframe.
     
@@ -26,9 +26,12 @@ def plot_corr(df, fn, size=11):
     plt.xticks(range(len(corr.columns)), corr.columns)
     plt.yticks(range(len(corr.columns)), corr.columns)
     
-    plt.savefig(fn)
+    if fn != None:
+        plt.savefig(fn)
     
     print("saved")
+    
+    return plt
 
 
 if __name__ == '__main__':
