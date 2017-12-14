@@ -106,7 +106,8 @@ class Search(object):
     def _createList(self):
         def h(params, done=[], values={}):
             if len(done) == len(params.keys()):
-                self.values.append(copy(values))
+                if values not in self.values:
+                    self.values.append(copy(values))
                 return
             
             for key in sorted(params.keys()):
