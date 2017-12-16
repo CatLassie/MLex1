@@ -4,6 +4,7 @@ Created on Dec 12, 2017
 @author: martin
 '''
 
+from Search import Search
 from Test import Test
 
 from sklearn.tree import DecisionTreeRegressor
@@ -27,6 +28,11 @@ def main():
     del(data['ViolentCrimesPerPop'])
     X= data
     # print(y)
+    
+    # parameters= [{'n_neighbors' : range(4, 8), 'weights':['uniform', 'distance'], 'p':[1, 2]}]
+    parameters= {'n_neighbors' : range(4, 8)}
+    h= Search(X, y, KNeighborsRegressor(), parameters)
+    h.run()
     
     h= Test(X, y, DecisionTreeRegressor())
     h.run()

@@ -78,6 +78,37 @@ def clean(data, save_plt= False):
     # -- TotalPctDiv: percentage of population who are divorced (numeric - decim
     del(data['TotalPctDiv'])
     
+    # -- OwnOccLowQuart: owner occupied housing - lower quartile value (numeric - decimal)
+    # -- OwnOccMedVal: owner occupied housing - median value (numeric - decimal)
+    # -- OwnOccHiQuart: owner occupied housing - upper quartile value (numeric - decimal)
+    del(data['OwnOccLowQuart'])
+    del(data['OwnOccHiQuart'])
+    
+    # -- medFamInc: median family income (differs from household income for non-family households) (numeric - decimal)
+    # -- perCapInc: per capita income (numeric - decimal)
+    # -- whitePerCap: per capita income for caucasians (numeric - decimal)
+    # -- blackPerCap: per capita income for african americans (numeric - decimal)
+    del(data['medFamInc'])
+    del(data['perCapInc'])
+    
+    # -- RentLowQ: rental housing - lower quartile rent (numeric - decimal)
+    # -- RentMedian: rental housing - median rent (Census variable H32B from file STF1A) (numeric - decimal)
+    # -- RentHighQ: rental housing - upper quartile rent (numeric - decimal)
+    # -- MedRent: median gross rent (Census variable H43A from file STF3A - includes utilities) (numeric - decimal)
+    # -- MedRentPctHousInc: median gross rent as a percentage of household income (numeric - decimal)
+    # -- MedOwnCostPctInc: median owners cost as a percentage of household income - for owners with a mortgage (numeric - decimal)
+    # -- MedOwnCostPctIncNoMtg: median owners cost as a percentage of household income - for owners without a mortgag
+    del(data['RentMedian'])
+    del(data['RentLowQ'])
+    del(data['RentHighQ'])
+    del(data['MedRentPctHousInc'])
+    del(data['MedOwnCostPctInc'])
+    del(data['MedOwnCostPctIncNoMtg'])
+    
+    del(data['PctNotHSGrad'])
+    
+    del(data['PctLargHouseOccup'])
+    
     if save_plt:
         plot_corr(data, "communities.cor.final.png")
     

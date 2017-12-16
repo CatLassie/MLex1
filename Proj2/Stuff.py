@@ -31,7 +31,7 @@ def plot_corr(df, fn=None, size=11):
     
     print("saved")
     
-    return plt
+    return fig
 
 
 if __name__ == '__main__':
