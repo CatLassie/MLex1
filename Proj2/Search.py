@@ -12,16 +12,25 @@ except ImportError:
 import cProfile
 import pstats
 from copy import copy
-from joblib import Parallel, delayed
+# from joblib import Parallel, delayed
 from sklearn.model_selection import train_test_split
 from sklearn.model_selection import KFold
 from sklearn.model_selection import cross_validate
 from sklearn.model_selection import cross_val_predict
 from sklearn import metrics
+import time
 import numpy as np
 
 def split(X,y, n=0.8):
     return train_test_split(X, y, random_state=1234, test_size=n)
+
+class Result:
+    t_fit= 0
+    t_predict= 0
+    rmse= 0
+    
+    def __repr__(self):
+        return "[" + str(self.t_fit) + "," + str(self.t_predict) + "]"
 
 class Search(object):
     '''
@@ -38,40 +47,33 @@ class Search(object):
         self.model= model
         self.params= params
         
-    def train(self, params):
+    def runTest(self, params):
         print(params)
+        self.results[str(params)]= []
+        
         self.pred_yy= np.empty([len(self.y), 1])
         
         def tt(train, test, params):
-            pass
+            # construct model
+            m= self.model.set_params(**params)          
+            
+            t1= time.clock()
+            xxx= m.fit(self.X.iloc[train], self.y.iloc[train])
+            t2= time.clock()
+            self.pred_y[test, 0]= xxx.predict(self.X.iloc[test])
+            t3= time.clock()
+            
+            # evaluate
+            r= Result()
+            r.t_fit= t2 - t1
+            r.t_predict= t3 - t2
+            r.rmse= metrics.mean_squared_error(self.y.iloc[test], self.pred_y[test, 0])
+            
+            self.results[str(params)].append(r)
         
-        Parallel(n_jobs=2)(delayed(tt)(train, test, params) for (train, test) in self.splits)
-    
-    def trainOld(self, full=False, k=10):
-        
-        k_fold= KFold(n_splits=k)
-        # res= cross_validate(self.model, self.X, self.y, cv=k_fold, n_jobs=-1)
-        # print(res)
-        self.pred_y= cross_val_predict(self.model, self.X, self.y, cv=k_fold)
-        
-        if full == True:
-            self.pred_yy= np.empty([len(self.y), 1])
-            x= 0
-            self.models= {}
-            self.splits= {}
-            for train_idx, test_idx in k_fold.split(self.X):
-                if type(self.X) == np.ndarray:
-                    train= self.X[train_idx]
-                else:
-                    train= self.X.iloc[train_idx]
-                model= self.model.fit(train, self.y.iloc[train_idx])
-                self.pred_yy[test_idx, 0]= model.predict(self.X.iloc[test_idx])
-                self.models[x]= model
-                self.splits[x]= test_idx
-                x+= 1
-    
-    def labelFun(self, fun):
-        self.lblFun= fun
+        # Parallel(n_jobs=2)(delayed(tt)(train, test, params) for (train, test) in self.splits)
+        for (train, test) in self.splits:
+            tt(train, test, params) 
     
     def report(self, x= -1, fn=None):
         if x == -1:
@@ -127,18 +129,16 @@ class Search(object):
         k_fold= KFold(n_splits=10)
         for train_index, test_index in k_fold.split(self.X):
             self.splits.append((train_index, test_index))
+        self.pred_y= np.empty([len(self.y), 1])
         
         self._createList()
         
-        for params in self.values:
-            self.train(params)
+        self.results={}
         
-        #self.report()
-#         for i in range(0, 10):
-#             print(i)
-#             self.report(i)
-        # print(self.models)
-        #for train_idx, test_idx in k_fold.split(self.X):
+        for params in self.values:
+            self.runTest(params)
+            
+        print(self.results)
         
     def predict(self, X):
         model= self.model.fit(self.X, self.y)
