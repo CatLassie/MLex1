@@ -12,15 +12,14 @@ except ImportError:
 import cProfile
 import pstats
 from copy import copy
-# from joblib import Parallel, delayed
+from joblib import Parallel, delayed
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.model_selection import KFold
-from sklearn.model_selection import cross_validate
-from sklearn.model_selection import cross_val_predict
 from sklearn import metrics
 import time
 import numpy as np
+from math import sqrt
 
 def split(X,y, n=0.8):
     return train_test_split(X, y, random_state=1234, test_size=n)
@@ -41,7 +40,7 @@ class Search(object):
     classdocs
     '''
     
-    def __init__(self, X, y, model, params):
+    def __init__(self, X, y, model, params, verbose= False):
         '''
         Constructor
         '''
@@ -50,34 +49,46 @@ class Search(object):
         # self.train_x, self.test_x, self.train_y, self.test_y= split(X,y)
         self.model= model
         self.params= params
+        self.verbose= verbose
+    
+    def tt(self, train, test, params):
+        # construct model
+        m= self.model.set_params(**params)          
         
+        t1= time.clock()
+        xxx= m.fit(self.X.iloc[train], self.y.iloc[train])
+        t2= time.clock()
+        # self.pred_y[test, 0]= xxx.predict(self.X.iloc[test])
+        pred_y= xxx.predict(self.X.iloc[test])
+        t3= time.clock()
+        
+        # evaluate
+        r= SingleResult()
+        r.t_fit= t2 - t1
+        r.t_predict= t3 - t2
+        # r.rmse= metrics.mean_squared_error(self.y.iloc[test], self.pred_y[test, 0])
+        r.rmse= sqrt(metrics.mean_squared_error(self.y.iloc[test], pred_y))
+        
+        #self.results[str(params)].results.append(r)
+        return (str(params), r)
+    
     def runTest(self, params):
-        # print(params)
-        self.results[str(params)]= Result()
+        self.count+= 1
+        if self.verbose:
+            print(params, self.count / len(self.values))
         
         self.pred_yy= np.empty([len(self.y), 1])
         
-        def tt(train, test, params):
-            # construct model
-            m= self.model.set_params(**params)          
-            
-            t1= time.clock()
-            xxx= m.fit(self.X.iloc[train], self.y.iloc[train])
-            t2= time.clock()
-            self.pred_y[test, 0]= xxx.predict(self.X.iloc[test])
-            t3= time.clock()
-            
-            # evaluate
-            r= SingleResult()
-            r.t_fit= t2 - t1
-            r.t_predict= t3 - t2
-            r.rmse= metrics.mean_squared_error(self.y.iloc[test], self.pred_y[test, 0])
-            
-            self.results[str(params)].results.append(r)
-        
-        # Parallel(n_jobs=2)(delayed(tt)(train, test, params) for (train, test) in self.splits)
-        for (train, test) in self.splits:
-            tt(train, test, params)
+        #Parallel(n_jobs=4, verbose=1, backend="threading")(map(delayed(work), arg_instances))
+        h= Parallel(n_jobs=4)(delayed(self.tt)(train, test, params) for (train, test) in self.splits)
+#         h= []
+#         for (train, test) in self.splits:
+#             h.append(self.tt(train, test, params))
+
+        for (k, v) in h:
+            if k not in self.results:
+                self.results[k]= Result()
+            self.results[k].results.append(v)
         
         res= self.results[str(params)].results
         rx= self.results[str(params)]
@@ -216,11 +227,16 @@ class Search(object):
         
         self.min= np.inf
         
+        self.count= 0
         for params in self.values:
+            self.results[str(params)]= Result()
             self.runTest(params)
             
         # print(self.results)
-        
+    
+    def getBest(self):
+        return self.best, self.min
+      
     def predict(self, X):
         model= self.model.fit(self.X, self.y)
         return model.predict(X)
