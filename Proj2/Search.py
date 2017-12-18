@@ -9,8 +9,6 @@ try:
     from StringIO import StringIO as StringIO
 except ImportError:
     from io import StringIO
-import cProfile
-import pstats
 from copy import copy
 from joblib import Parallel, delayed
 import pandas as pd
@@ -28,6 +26,8 @@ class SingleResult:
     t_fit= 0
     t_predict= 0
     rmse= 0
+    mae= 0
+    cv= 0
     
     def __repr__(self):
         return "[" + str(self.t_fit) + "," + str(self.t_predict) + "]"
@@ -56,10 +56,20 @@ class Search(object):
         m= self.model.set_params(**params)          
         
         t1= time.clock()
-        xxx= m.fit(self.X.iloc[train], self.y.iloc[train])
+        if type(self.X) != np.ndarray:
+            X= self.X[train]
+            y= self.y[train]
+            Xt= self.X[test]
+            yt= self.y[test]
+        else:
+            X= self.X.iloc[train]
+            y= self.y.iloc[train]
+            Xt= self.X.iloc[test]
+            yt= self.y.iloc[test]
+        xxx= m.fit(X, y)
         t2= time.clock()
         # self.pred_y[test, 0]= xxx.predict(self.X.iloc[test])
-        pred_y= xxx.predict(self.X.iloc[test])
+        pred_y= xxx.predict(Xt)
         t3= time.clock()
         
         # evaluate
@@ -67,7 +77,9 @@ class Search(object):
         r.t_fit= t2 - t1
         r.t_predict= t3 - t2
         # r.rmse= metrics.mean_squared_error(self.y.iloc[test], self.pred_y[test, 0])
-        r.rmse= sqrt(metrics.mean_squared_error(self.y.iloc[test], pred_y))
+        r.rmse= sqrt(metrics.mean_squared_error(yt, pred_y))
+        r.mae= metrics.mean_absolute_error(yt, pred_y)
+        r.cav= yt.corr(pred_y)
         
         #self.results[str(params)].results.append(r)
         return (str(params), r)
@@ -100,6 +112,10 @@ class Search(object):
         rx.tps= np.std([r.t_predict for r in res])
         rx.sm= np.mean([r.rmse for r in res])
         rx.ss= np.std([r.rmse for r in res])
+        rx.mm= np.mean([r.mae for r in res])
+        rx.ms= np.std([r.mae for r in res])
+        rx.cm= np.mean([r.cv for r in res])
+        rx.cs= np.std([r.cv for r in res])
         
         if rx.sm < self.min:
             self.min= rx.sm
@@ -114,6 +130,10 @@ class Search(object):
         ps.append('sd_predict')
         ps.append('mean_rmse')
         ps.append('sd_rmse')
+        ps.append('mean_mae')
+        ps.append('sd_mae')
+        ps.append('mean_cv')
+        ps.append('sd_cv')
         
         tfm= []
         tfs= []
@@ -121,6 +141,10 @@ class Search(object):
         tps= []
         sm= []
         ss= []
+        mm= []
+        ms= []
+        cm= []
+        cs= []
         
         pp= {}
         for k in self.params:
@@ -139,6 +163,10 @@ class Search(object):
             tps.append(res.tps)
             sm.append(res.sm)
             ss.append(res.ss)
+            mm.append(res.mm)
+            ms.append(res.ms)
+            cm.append(res.cm)
+            cs.append(res.cs)
         
         df= pd.DataFrame()
         for k in self.params:
@@ -149,6 +177,10 @@ class Search(object):
         df['sd_predict']= tps
         df['mean_rmse']= sm
         df['sd_rmse']= ss
+        df['mean_mae']= mm
+        df['sd_mae']= ms
+        df['mean_cv']= cm
+        df['sd_cv']= cs
         
         return df
         
@@ -176,7 +208,7 @@ class Search(object):
         out.write("\\begin{tabular}{" + (len(ps)*"c") + "rr}\n")
         out.write("\\toprule\n")
         out.write(" & ".join(["\\textbf{" + k.replace("_", "\_") + "}" for k in ps]))
-        out.write(" & \\textbf{time" + tt + "} & \\textbf{time p" + tt + "} & \\textbf{score}\\\\\n")
+        out.write(" & \\textbf{time" + tt + "} & \\textbf{time p" + tt + "} & \\textbf{rmse} & \\textbf{mae} & \\textbf{cv}\\\\\n")
         out.write("\\midrule\n")
         
         for params in self.values:
@@ -184,7 +216,7 @@ class Search(object):
             
             res= self.results[str(params)]
             
-            s= "{6} & ${0:.2f} \\pm {1:.2f}$ & ${2:.2f} \\pm {3:.2f}$ & ${4:.2f} \\pm {5:.2f}$\\\\".format(res.tfm*scale,res.tfs*scale, res.tpm*scale,res.tps*scale, res.sm, res.ss, pc)
+            s= "{6} & ${0:.2f} \\pm {1:.2f}$ & ${2:.2f} \\pm {3:.2f}$ & ${4:.2f} \\pm {5:.2f}$ & ${7:.2f} \\pm {8:.2f}$ & ${9:.2f} \\pm {10:.2f}$\\\\".format(res.tfm*scale,res.tfs*scale, res.tpm*scale,res.tps*scale, res.sm, res.ss, pc, res.mm, res.ms, res.cm, res.cs)
             out.write(s + "\n")
             
             pass
