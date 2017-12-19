@@ -14,6 +14,7 @@ import pandas as pd
 
 from sklearn.tree import DecisionTreeRegressor
 from sklearn.neighbors import KNeighborsRegressor
+from sklearn.naive_bayes import GaussianNB
 from sklearn import preprocessing
 
 import KDD
@@ -30,6 +31,12 @@ def run_knn(X, y):
 def run_tree(X, y):
     parameters= {'criterion' : ['mse', 'friedman_mse', 'mae'], 'splitter' : ['best', 'random'], 'max_features': ['auto', 'sqrt', 'log2']}
     h= Search(X, y, DecisionTreeRegressor(), parameters, verbose=False)
+    h.run()
+    print(h.getBest())
+    
+def run_bayes(X, y):
+    parameters= {}
+    h= Search(X, y, GaussianNB(), parameters, verbose=False)
     h.run()
     print(h.getBest())
     
@@ -78,8 +85,9 @@ def main():
     X= dataa
     
     t1= time.time()
-    run_knn(X, y)
-    run_tree(X, y)
+    # run_knn(X, y)
+    # run_tree(X, y)
+    run_bayes(X, y)
     t2= time.time()
     
     predict(X, y, scaler)
@@ -100,8 +108,9 @@ def main():
     X= datab
     
     t1= time.time()
-    run_knn(X, y)
-    run_tree(X, y)
+#     run_knn(X, y)
+#     run_tree(X, y)
+    run_bayes(X, y)
     t2= time.time()
     
     # predict(X, y, scaler)

@@ -56,7 +56,7 @@ class Search(object):
         m= self.model.set_params(**params)          
         
         t1= time.clock()
-        if type(self.X) != np.ndarray:
+        if type(self.X) == np.ndarray:
             X= self.X[train]
             y= self.y[train]
             Xt= self.X[test]
@@ -79,7 +79,10 @@ class Search(object):
         # r.rmse= metrics.mean_squared_error(self.y.iloc[test], self.pred_y[test, 0])
         r.rmse= sqrt(metrics.mean_squared_error(yt, pred_y))
         r.mae= metrics.mean_absolute_error(yt, pred_y)
-        r.cav= yt.corr(pred_y)
+        if type(pred_y) == np.ndarray:
+            r.cav= yt.corr(pd.Series(pred_y))
+        else:
+            r.cav= yt.corr(pred_y)
         
         #self.results[str(params)].results.append(r)
         return (str(params), r)
