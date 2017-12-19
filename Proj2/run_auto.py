@@ -31,7 +31,7 @@ def run_knn(X, y, results):
     h.run()
     print(h.getBest())
     results['KNN']= h.getBestResult()
-    h.report("../Slides/tables/auto.knn.tex")
+    h.report("../Slides2/tables/auto.knn.tex")
     # h.report()
     # print(h.reportTable())
     
@@ -41,7 +41,7 @@ def run_tree(X, y, results):
     h.run()
     print(h.getBest())
     results['Decision Tree']= h.getBestResult()
-    h.report("../Slides/tables/auto.dt.tex")
+    h.report("../Slides2/tables/auto.dt.tex")
    
 def run_bayes(X, y, results):
     parameters= {}
