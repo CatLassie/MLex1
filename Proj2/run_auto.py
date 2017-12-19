@@ -30,7 +30,7 @@ def run_knn(X, y, results):
     h= Search(X, y, KNeighborsRegressor(), parameters, verbose=False)
     h.run()
     print(h.getBest())
-    results['Decision Tree']= h.getBestResult()
+    results['KNN']= h.getBestResult()
     h.report("../Slides/tables/auto.knn.tex")
     # h.report()
     # print(h.reportTable())
