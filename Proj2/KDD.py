@@ -116,7 +116,7 @@ def clean(data, save_plt= False):
     
     return data
 
-def xxx(data):
+def transform(data):
     cat_cols= data.select_dtypes(['object']).columns
     for col in cat_cols:
         data[col]= data[col].astype('category')
@@ -124,7 +124,7 @@ def xxx(data):
     
     return data
 
-def missing_vals(data):
+def remove_missing_vals(data):
     cols= data.columns[data.isnull().any()]
     
     for col in cols:
@@ -135,3 +135,11 @@ def missing_vals(data):
 
     return data
 
+def impute_mean(data):
+    cols= data.columns[data.isnull().any()]
+    
+    for col in cols:
+        meanval= (data[col][data[col] != None]).mean()
+        data[col] = data['col'].apply(lambda s: meanval if pd.isnull(s) else s)
+
+    return data

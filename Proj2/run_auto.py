@@ -30,7 +30,7 @@ def run_tree(X, y):
     print(h.getBest())
     
 def predict(X, y):
-    ind,f= Auto.load_data("test")
+    ind,_= Auto.load_data("test")
     ind= Auto.missing_vals(Auto.clean(ind))
     idx= ind['id']
     del(ind['id'])

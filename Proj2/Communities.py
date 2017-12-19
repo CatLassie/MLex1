@@ -15,6 +15,8 @@ def load_data():
     
     data= pd.read_csv("../data/communities.data", names=cols)
     
+    data= data.where(data != "?", None)
+    
     return data, cols
 
 def clean(data, save_plt= False):
@@ -113,3 +115,15 @@ def clean(data, save_plt= False):
         plot_corr(data, "communities.cor.final.png")
     
     return data
+
+def missing_vals(data):
+    cols= data.columns[data.isnull().any()]
+    
+    for col in cols:
+        #print(col, 'before', data[col])
+        #data[col]= data[col].interpolate()
+        #print(col, 'after', data[col])
+        del(data[col])
+
+    return data
+
