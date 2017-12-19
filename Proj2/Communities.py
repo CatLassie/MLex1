@@ -28,7 +28,7 @@ def clean(data, save_plt= False):
     del(data['fold'])
     
     if save_plt:
-        plot_corr(data, "communities.cor.orig.png")
+        plot_corr(data, "communities_orig.png")
     
     del(data['numbUrban'])
     del(data['NumUnderPov'])
@@ -37,9 +37,6 @@ def clean(data, save_plt= False):
     del(data['NumInShelters'])
     del(data['NumStreet'])
     del(data['NumKindsDrugsSeiz'])
-    
-    if save_plt:
-        plot_corr(data, "communities.cor.withoutnum.png")
     
     # 'a corse the correlate. We just hope it works when we only keep agePct16t24
     del(data['agePct12t29'])
@@ -111,8 +108,38 @@ def clean(data, save_plt= False):
     
     del(data['PctLargHouseOccup'])
     
+    # correlates with PersPerFam
+    del(data['PersPerOccupHous'])
+    
+    # correlates with agePct65up -> Pct households with social sec income
+    del(data['pctWSocSec'])
+    
+    # oddly it correlates with population
+    del(data['HousVacant'])
+    
+    # correlates with malediv
+    del(data['FemalePctDiv'])
+    
+    del(data['MedRent'])
+    
+    del(data['racePctWhite'])
+    del(data['racePctAsian'])
+    del(data['racePctHisp'])
+    
+    del(data['PctForeignBorn'])
+    
+    del(data['householdsize'])
+    
+    del(data['LandArea'])
+    
+    # correlates with PctBSorMore !!!
+    del(data['PctOccupMgmtProf'])
+    
+    # Correlates with  PctHousOwnOcup
+    del(data['PctPersOwnOccup'])
+    
     if save_plt:
-        plot_corr(data, "communities.cor.final.png")
+        plot_corr(data, "communities_final.png")
     
     return data
 
