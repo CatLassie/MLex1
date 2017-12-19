@@ -239,7 +239,11 @@ neighbors: 9, p: 2, weights: distance
 \end{frame}
 
 \begin{frame}{Preprocessing}
+Many correlating features
 
+No real information about features given
+
+Removed $\sim$ 70 features
 \end{frame}
 
 \begin{frame}{Final view}
@@ -258,7 +262,7 @@ neighbors: 291, p: 2, weights: uniform
 \end{block}
 
 \begin{block}{SVR}
-
+'gamma': 0.1, 'C': 1, 'kernel': 'rbf'
 \end{block}
 % results from removing:
 % ({'n_neighbors': 291, 'p': 2, 'weights': 'uniform'}, 4.1350573536016384)
