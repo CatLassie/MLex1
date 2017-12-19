@@ -86,6 +86,10 @@ Only 66 features left
 
 \begin{frame}{Results}
 \resizebox{\linewidth}{!}{\input{tables/communities.tex}}
+%KNN ({'n_neighbors': 39, 'p': 1, 'weights': 'uniform'}, 0.14411585292632384)
+%Tree({'splitter': 'best', 'criterion': 'friedman_mse', 'max_features': 'auto'}, %0.14542545934079396)
+%gnb ({}, 0.20893417278547977)
+%svm ({'gamma': 0.1, 'C': 1, 'kernel': 'rbf'}, 0.20459216628575627)
 \end{frame}
 
 \section{Stock}
@@ -107,9 +111,80 @@ Task: ?
 \includegraphics[height=\textheight,width=\textwidth,keepaspectratio]{plots/stock_final.png}
 \end{frame}
 
+\begin{frame}{Preprocessing}
+
+\end{frame}
+
+\begin{frame}{Results}
+\resizebox{\linewidth}{!}{\input{tables/stock.tex}}
+%Annual Return
+%({'p': 1, 'n_neighbors': 13, 'weights': 'distance'}, 0.017464444966712522)
+%Best {'p': 1, 'n_neighbors': 13, 'weights': 'distance'}
+%({'max_features': 'auto', 'splitter': 'best', 'criterion': 'friedman_mse'}, 0.017480511823369488)
+%Best {'max_features': 'auto', 'splitter': 'best', 'criterion': 'friedman_mse'}
+%({}, 0.045353596283597149)
+%({'kernel': 'sigmoid', 'gamma': 100, 'C': 10000}, 0.037521455065540152)
+%Best {'kernel': 'sigmoid', 'gamma': 100, 'C': 10000}
+%Excess Return
+%({'p': 2, 'n_neighbors': 14, 'weights': 'uniform'}, 0.029410711493046936)
+%Best {'p': 2, 'n_neighbors': 14, 'weights': 'uniform'}
+%({'max_features': 'sqrt', 'splitter': 'random', 'criterion': 'mse'}, 0.027639007161707793)
+%Best {'max_features': 'sqrt', 'splitter': 'random', 'criterion': 'mse'}
+%({}, 0.030747304462243566)
+%({'kernel': 'sigmoid', 'gamma': 100, 'C': 10000}, 0.024376446796960709)
+%Best {'kernel': 'sigmoid', 'gamma': 100, 'C': 10000}
+%Systematic Risk
+%({'p': 1, 'n_neighbors': 1, 'weights': 'distance'}, 0.024608917252478796)
+%Best {'p': 1, 'n_neighbors': 1, 'weights': 'distance'}
+%({'max_features': 'auto', 'splitter': 'best', 'criterion': 'friedman_mse'}, 0.031696405813183427)
+%Best {'max_features': 'auto', 'splitter': 'best', 'criterion': 'friedman_mse'}
+%({}, 0.05533186206973556)
+%({'kernel': 'linear', 'gamma': 0.001, 'C': 10}, 0.055430927962504581)
+%Best {'kernel': 'linear', 'gamma': 0.001, 'C': 10}
+%Total Risk
+%({'p': 2, 'n_neighbors': 14, 'weights': 'uniform'}, 66.379581864771779)
+%Best {'p': 2, 'n_neighbors': 14, 'weights': 'uniform'}
+%({'max_features': 'sqrt', 'splitter': 'random', 'criterion': 'mse'}, 64.344454982589511)
+%Best {'max_features': 'sqrt', 'splitter': 'random', 'criterion': 'mse'}
+%({}, 64.237512184944563)
+%({'kernel': 'sigmoid', 'gamma': 100, 'C': 10000}, 55.224220447355592)
+%Best {'kernel': 'sigmoid', 'gamma': 100, 'C': 10000}
+%Abs. Win Rate
+%({'p': 2, 'n_neighbors': 14, 'weights': 'uniform'}, 51.047246411047887)
+%Best {'p': 2, 'n_neighbors': 14, 'weights': 'uniform'}
+%({'max_features': 'sqrt', 'splitter': 'random', 'criterion': 'mse'}, 49.83591746228614)
+%Best {'max_features': 'sqrt', 'splitter': 'random', 'criterion': 'mse'}
+%({}, 49.776696369867437)
+%({'kernel': 'sigmoid', 'gamma': 100, 'C': 10000}, 44.192224269048054)
+%Best {'kernel': 'sigmoid', 'gamma': 100, 'C': 10000}
+%Rel. Win Rate
+%({'p': 2, 'n_neighbors': 14, 'weights': 'uniform'}, 41.478207993268704)
+%Best {'p': 2, 'n_neighbors': 14, 'weights': 'uniform'}
+%({'max_features': 'sqrt', 'splitter': 'random', 'criterion': 'mse'}, 40.675461749113211)
+%Best {'max_features': 'sqrt', 'splitter': 'random', 'criterion': 'mse'}
+%({}, 40.6361006383042)
+%({'kernel': 'rbf', 'gamma': 10, 'C': 1000}, 38.240834600476589)
+%Best {'kernel': 'rbf', 'gamma': 10, 'C': 1000}
+
+\end{frame}
+
+
 \section{Auto}
-\begin{frame}{Initial view}
+\begin{frame}{Initial/Final view}
 \includegraphics[height=\textheight,width=\textwidth,keepaspectratio]{plots/communities_orig.png}
+\end{frame}
+
+\begin{frame}{Preprocessing}
+
+\end{frame}
+
+\begin{frame}{Results}
+%({'weights': 'uniform', 'n_neighbors': 291, 'p': 2}, 4.1350573536016384)
+%Best {'weights': 'uniform', 'n_neighbors': 291, 'p': 2}
+%({'splitter': 'best', 'max_features': 'auto', 'criterion': 'friedman_mse'}, 4.1554836861671154)
+%Best {'splitter': 'best', 'max_features': 'auto', 'criterion': 'friedman_mse'}
+%({}, 4.4882746764655668)
+
 \end{frame}
 
 \section{KDD}
@@ -117,7 +192,11 @@ Task: ?
 \includegraphics[height=\textheight,width=\textwidth,keepaspectratio]{plots/kdd_orig.png}
 \end{frame}
 
-\begin{frame}{Initial view}
+\begin{frame}{Preprocessing}
+
+\end{frame}
+
+\begin{frame}{Final view}
 \includegraphics[height=\textheight,width=\textwidth,keepaspectratio]{plots/kdd_final.png}
 \end{frame}
 
