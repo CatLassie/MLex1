@@ -29,7 +29,7 @@ def run_knn(X, y, results,t):
     h.run()
     print(h.getBest())
     results['KNN '+t]= h.getBestResult()
-    h.report("../Slides/tables/kdd.knn.tex")
+    h.report("../Slides2/tables/kdd.knn.tex")
     # print(h.reportTable())
     
 def run_tree(X, y, results, t):
@@ -38,7 +38,7 @@ def run_tree(X, y, results, t):
     h.run()
     print(h.getBest())
     results['Decision Tree '+t]= h.getBestResult()
-    h.report("../Slides/tables/kdd.dt.tex")
+    h.report("../Slides2/tables/kdd.dt.tex")
     
 def run_bayes(X, y, results, t):
     parameters= {}
@@ -56,7 +56,7 @@ def run_svm(X, y, results,t):
     h.run()
     print(h.getBest())
     results['SVR '+t]= h.getBestResult()
-    h.report("../Slides/tables/kdd.svm.tex")
+    h.report("../Slides2/tables/kdd.svm.tex")
     
 def predict(X, y, scaler, variant=1):
     o, _= KDD.load_data("test")
