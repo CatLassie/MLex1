@@ -27,8 +27,15 @@
 %\end{frame}
 
 \begin{frame}{General Setup}
-\begin{block}{Algorithms}
+Python \& sklearn
 
+\begin{block}{Algorithms}
+\begin{itemize}
+\item KNN
+\item Decision Trees
+\item Naive Bayes
+\item SVM (SVR)
+\end{itemize}
 \end{block}
 
 10 fold cross validation
@@ -82,6 +89,20 @@ Only 66 features left
 
 \begin{frame}{Final view}
 \includegraphics[height=\textheight,width=\textwidth,keepaspectratio]{plots/communities_final.png}
+\end{frame}
+
+\begin{frame}{Best parameters}
+\begin{block}{KNN}
+neighbors: 39, p: 1, weights: uniform
+\end{block}
+
+\begin{block}{Decision Tree}
+'splitter': 'best', 'criterion': 'friedman\_mse', 'max\_features': 'auto'
+\end{block}
+
+\begin{block}{SVR}
+'gamma': 0.1, 'C': 1, 'kernel': 'rbf'
+\end{block}
 \end{frame}
 
 \begin{frame}{Results}
@@ -171,20 +192,34 @@ Task: ?
 
 \section{Auto}
 \begin{frame}{Initial/Final view}
-\includegraphics[height=\textheight,width=\textwidth,keepaspectratio]{plots/communities_orig.png}
+\includegraphics[height=\textheight,width=\textwidth,keepaspectratio]{plots/auto_final.png}
 \end{frame}
 
 \begin{frame}{Preprocessing}
 
 \end{frame}
 
-\begin{frame}{Results}
+\begin{frame}{Best Parameters}
 %({'weights': 'uniform', 'n_neighbors': 291, 'p': 2}, 4.1350573536016384)
 %Best {'weights': 'uniform', 'n_neighbors': 291, 'p': 2}
 %({'splitter': 'best', 'max_features': 'auto', 'criterion': 'friedman_mse'}, 4.1554836861671154)
 %Best {'splitter': 'best', 'max_features': 'auto', 'criterion': 'friedman_mse'}
 %({}, 4.4882746764655668)
+\begin{block}{KNN}
+neighbors: 291, p: 2, weights: uniform
+\end{block}
 
+\begin{block}{Decision Tree}
+'splitter': 'best', 'criterion': 'friedman\_mse', 'max\_features': 'auto'
+\end{block}
+
+\begin{block}{SVR}
+
+\end{block}
+\end{frame}
+
+\begin{frame}{Results}
+%\resizebox{\linewidth}{!}{\input{tables/auto.tex}}
 \end{frame}
 
 \section{KDD}
@@ -202,6 +237,18 @@ Task: ?
 
 \begin{frame}{Findings}
 Imputing mean vs. removing cols with missing values: latter gives better results
+
+\begin{block}{KNN}
+neighbors: 291, p: 2, weights: uniform
+\end{block}
+
+\begin{block}{Decision Tree}
+'splitter': 'best', 'criterion': 'friedman\_mse', 'max\_features': 'auto'
+\end{block}
+
+\begin{block}{SVR}
+
+\end{block}
 % results from removing:
 % ({'n_neighbors': 291, 'p': 2, 'weights': 'uniform'}, 4.1350573536016384)
 % ({'splitter': 'best', 'criterion': 'friedman_mse', 'max_features': 'auto'}, 4.1544598320715354)
@@ -216,8 +263,17 @@ Imputing mean vs. removing cols with missing values: latter gives better results
 
 \section{Summary}
 \begin{frame}
+\begin{block}{Runtimes}
+Used different PCs for testing $\rightarrow$ no real runtime measurements
+\end{block}
 
-No real runtime measurements
+Search space too large
+
+More imputation strategies?
+
+No feature selection
+
+No autosklearn
 \end{frame}
 
 \end{document}
