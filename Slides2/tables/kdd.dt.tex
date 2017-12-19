@@ -1,0 +1,24 @@
+\begin{tabular}{cccrrrrr}
+\toprule
+\textbf{splitter} & \textbf{max\_features} & \textbf{criterion} & \textbf{time (ms)} & \textbf{time p (ms)} & \textbf{rmse} & \textbf{mae}\\
+\midrule
+best & auto & friedman_mse & $42.90 \pm 73.42$ & $590.25 \pm 137.65$ & $4.16 \pm 0.87$ & $1.60 \pm 0.14$\\
+random & auto & friedman_mse & $44.18 \pm 74.55$ & $585.41 \pm 147.04$ & $4.17 \pm 0.89$ & $1.60 \pm 0.15$\\
+best & log2 & friedman_mse & $43.94 \pm 74.29$ & $580.66 \pm 155.59$ & $4.19 \pm 0.92$ & $1.61 \pm 0.15$\\
+random & log2 & friedman_mse & $43.67 \pm 74.05$ & $575.98 \pm 163.42$ & $4.21 \pm 0.93$ & $1.61 \pm 0.15$\\
+best & sqrt & friedman_mse & $43.54 \pm 73.77$ & $571.37 \pm 170.66$ & $4.22 \pm 0.95$ & $1.61 \pm 0.16$\\
+random & sqrt & friedman_mse & $43.29 \pm 73.53$ & $566.84 \pm 177.37$ & $4.24 \pm 0.96$ & $1.61 \pm 0.16$\\
+best & auto & mae & $243.91 \pm 2297.85$ & $562.38 \pm 183.63$ & $4.26 \pm 1.00$ & $1.61 \pm 0.17$\\
+random & auto & mae & $356.50 \pm 2627.72$ & $557.99 \pm 189.49$ & $4.29 \pm 1.03$ & $1.62 \pm 0.18$\\
+best & log2 & mae & $356.94 \pm 2617.53$ & $553.66 \pm 194.99$ & $4.30 \pm 1.05$ & $1.62 \pm 0.18$\\
+random & log2 & mae & $355.54 \pm 2607.50$ & $549.41 \pm 200.16$ & $4.31 \pm 1.05$ & $1.62 \pm 0.18$\\
+best & sqrt & mae & $361.76 \pm 2598.62$ & $545.22 \pm 205.04$ & $4.33 \pm 1.06$ & $1.62 \pm 0.19$\\
+random & sqrt & mae & $362.40 \pm 2588.79$ & $541.09 \pm 209.66$ & $4.34 \pm 1.08$ & $1.63 \pm 0.19$\\
+best & auto & mse & $367.34 \pm 2579.74$ & $537.02 \pm 214.03$ & $4.36 \pm 1.09$ & $1.63 \pm 0.19$\\
+random & auto & mse & $366.24 \pm 2570.13$ & $533.02 \pm 218.17$ & $4.37 \pm 1.10$ & $1.63 \pm 0.20$\\
+best & log2 & mse & $363.64 \pm 2560.77$ & $529.07 \pm 222.11$ & $4.39 \pm 1.12$ & $1.63 \pm 0.20$\\
+random & log2 & mse & $361.05 \pm 2551.51$ & $525.18 \pm 225.86$ & $4.40 \pm 1.12$ & $1.63 \pm 0.20$\\
+best & sqrt & mse & $358.62 \pm 2542.34$ & $521.35 \pm 229.42$ & $4.41 \pm 1.14$ & $1.64 \pm 0.20$\\
+random & sqrt & mse & $356.10 \pm 2533.28$ & $517.57 \pm 232.82$ & $4.42 \pm 1.14$ & $1.64 \pm 0.20$\\
+\bottomrule
+\end{tabular}
