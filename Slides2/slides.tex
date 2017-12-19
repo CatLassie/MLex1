@@ -1,0 +1,37 @@
+\documentclass[12pt]{beamer}
+\usetheme{Frankfurt}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\author{Martin Dobiasch}
+%\title{}
+%\setbeamercovered{transparent} 
+%\setbeamertemplate{navigation symbols}{} 
+%\logo{} 
+%\institute{} 
+%\date{} 
+%\subject{} 
+\begin{document}
+
+\begin{frame}
+\titlepage
+\end{frame}
+
+%\begin{frame}
+%\tableofcontents
+%\end{frame}
+
+\section{KDD}
+\begin{frame}{Findings}
+Imputing mean vs. removing cols with missing values: latter gives better results
+% results from removing:
+% ({'n_neighbors': 291, 'p': 2, 'weights': 'uniform'}, 4.1350573536016384)
+% ({'splitter': 'best', 'criterion': 'friedman_mse', 'max_features': 'auto'}, 4.1544598320715354)
+% Results from imputing mean
+% ({'n_neighbors': 291, 'p': 2, 'weights': 'uniform'}, 4.289451889295445)
+% ({'splitter': 'best', 'criterion': 'friedman_mse', 'max_features': 'auto'}, 4.2979202497555358)
+\end{frame}
+
+\end{document}
