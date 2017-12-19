@@ -50,7 +50,7 @@ def run_bayes(X, y, results):
     print(h.getBest())
     results['GaussianNB']= h.getBestResult()
     
-def run_svm(X, y, results,t):
+def run_svm(X, y, results):
     C_range = 10. ** arange(-3, 8)
     gamma_range = 10. ** arange(-5, 4)
     parameters={'kernel' : ['linear','sigmoid', 'rbf', 'poly'], 'C' : C_range, 'gamma':gamma_range}
