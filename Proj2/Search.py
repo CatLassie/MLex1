@@ -80,9 +80,9 @@ class Search(object):
         r.rmse= sqrt(metrics.mean_squared_error(yt, pred_y))
         r.mae= metrics.mean_absolute_error(yt, pred_y)
         if type(pred_y) == np.ndarray:
-            r.cav= yt.corr(pd.Series(pred_y))
+            r.cv= yt.corr(pd.Series(pred_y))
         else:
-            r.cav= yt.corr(pred_y)
+            r.cv= yt.corr(pred_y)
         
         #self.results[str(params)].results.append(r)
         return (str(params), r)
@@ -99,7 +99,7 @@ class Search(object):
 #         h= []
 #         for (train, test) in self.splits:
 #             h.append(self.tt(train, test, params))
-
+        
         for (k, v) in h:
             if k not in self.results:
                 self.results[k]= Result()
@@ -123,6 +123,7 @@ class Search(object):
         if rx.sm < self.min:
             self.min= rx.sm
             self.best= params
+            self.bestresult= rx
     
     def reportTable(self):
         # ps= list(self.params.keys())
@@ -208,7 +209,7 @@ class Search(object):
             import sys
             out= sys.stdout
         
-        out.write("\\begin{tabular}{" + (len(ps)*"c") + "rr}\n")
+        out.write("\\begin{tabular}{" + (len(ps)*"c") + "rrrrr}\n")
         out.write("\\toprule\n")
         out.write(" & ".join(["\\textbf{" + k.replace("_", "\_") + "}" for k in ps]))
         out.write(" & \\textbf{time" + tt + "} & \\textbf{time p" + tt + "} & \\textbf{rmse} & \\textbf{mae} & \\textbf{cv}\\\\\n")
@@ -271,6 +272,9 @@ class Search(object):
     
     def getBest(self):
         return self.best, self.min
+    
+    def getBestResult(self):
+        return self.bestresult
       
     def predict(self, X):
         model= self.model.fit(self.X, self.y)
