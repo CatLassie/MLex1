@@ -10,12 +10,12 @@
 %\author{Martin \textsc{Dobiasch} \& Eugen \textsc{Havasi} \& Peter \textsc{Rjabcsenko}}
 \author{Martin Dobiasch \& Eugen Havasi \& Peter Rjabcsenko}
 %\title{}
-%\setbeamercovered{transparent}
-%\setbeamertemplate{navigation symbols}{}
-%\logo{}
-%\institute{}
-%\date{}
-%\subject{}
+%\setbeamercovered{transparent} 
+%\setbeamertemplate{navigation symbols}{} 
+%\logo{} 
+%\institute{} 
+%\date{} 
+%\subject{} 
 \begin{document}
 
 \begin{frame}
@@ -40,8 +40,7 @@ Python \& sklearn
 
 10 fold cross validation
 
-Values reported are mean $\pm$ standard deviation of root-mean-
-square errors, mean absolute errors and runtimes.
+Values reported are mean $\pm$ standard deviation
 
 \end{frame}
 
@@ -116,7 +115,7 @@ neighbors: 39, p: 1, weights: uniform
 
 \section{Stock}
 \begin{frame}{Dataset}
-...
+performances of stock portfolios
 
 Number of Instances: 315
 
@@ -124,7 +123,7 @@ Number of Attributes: 12
 
 No missing values
 
-Task: ?
+Task: predict various performance metrics
 
 4 periods of data $\rightarrow$ accumulated data
 \end{frame}
@@ -133,12 +132,23 @@ Task: ?
 \includegraphics[height=\textheight,width=\textwidth,keepaspectratio]{plots/stock_final.png}
 \end{frame}
 
-\begin{frame}{Preprocessing}
+\begin{frame}{Preprocessing \& Results}
+Different encodings of floats (',' vs. '.')
 
+Numbers with '\%' sign
+
+\begin{block}{Good (MAE $< 0.05$)}
+Annual Return, Excess Return, Systematic Risk
+\end{block}
+
+\begin{block}{Bad}
+Total Risk, Abs. Win Rate, Rel. Win Rate
+\end{block}
 \end{frame}
 
 \begin{frame}{Results}
 \resizebox{\linewidth}{!}{\input{tables/stock.tex}}
+
 %Annual Return
 %({'p': 1, 'n_neighbors': 13, 'weights': 'distance'}, 0.017464444966712522)
 %Best {'p': 1, 'n_neighbors': 13, 'weights': 'distance'}
