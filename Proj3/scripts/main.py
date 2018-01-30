@@ -1,10 +1,10 @@
 import sys
 
-from default import trainDefault
-from bayes import trainBayes
-from dTree import trainDTree
-from knn import trainKNN
-from svm import trainSVM
+from classifiers.default import trainDefault
+from classifiers.bayes import trainBayes
+from classifiers.dTree import trainDTree
+from classifiers.knn import trainKNN
+from classifiers.svm import trainSVM
 
 def main():
     if(len(sys.argv) == 1):
