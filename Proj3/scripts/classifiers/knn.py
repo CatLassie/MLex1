@@ -7,5 +7,6 @@ def trainKNN(args):
 		datasetName = args[2]
 	else:
 		datasetName = "defaultDatasetName"
-		
+	
 	print("training KNeighborsClassifier on "+ datasetName +" dataset")
+	df = pd.read_csv("datasets/"+datasetName+".data")

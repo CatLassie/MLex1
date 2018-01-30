@@ -7,5 +7,6 @@ def trainDTree(args):
 		datasetName = args[2]
 	else:
 		datasetName = "defaultDatasetName"
-		
+
 	print("training DecisionTreeClassifier on "+ datasetName +" dataset")
+	df = pd.read_csv("datasets/"+datasetName+".data")

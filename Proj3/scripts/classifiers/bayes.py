@@ -7,5 +7,6 @@ def trainBayes(args):
 		datasetName = args[2]
 	else:
 		datasetName = "defaultDatasetName"
-		
+
 	print("training GaussianNB on "+ datasetName +" dataset")
+	df = pd.read_csv("datasets/"+datasetName+".data")
