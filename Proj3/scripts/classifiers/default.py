@@ -3,9 +3,9 @@ import pandas as pd
 import sklearn as sk
 
 def trainDefault():
-	datasetName = "testDataset"
+	datasetName = "Congress.csv"
 	print("Training default classifier (GaussianNB) on default dataset ("+datasetName+")")
 
-	df = pd.read_csv("datasets/"+datasetName+".data")
+	df = pd.read_csv("datasets/"+datasetName)
 	print(df)
 	

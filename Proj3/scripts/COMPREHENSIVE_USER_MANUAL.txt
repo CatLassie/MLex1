@@ -16,7 +16,7 @@ To run the main script, execute
 >python main.py
 from a command line in the root folder "scripts".
 this will run the script with a default classifier (Gaussian Naive Bayes)
-on a default dataset (TODOdefaultDatasetName).
+on a default dataset (Congress.csv).
 
 additional command line arguments can be specified in the following way:
 >python main.py <classifier> <dataset> <classifier_parameter_1> <classifier_parameter_2>...
@@ -28,17 +28,17 @@ SVM -> for SVC,
 DTree -> for DecisionTreeClassifier.
 All 4 classifiers taken from the python "sklearn" library.
 
-<dataset> refers to the dataset name (WITHOUT the .data extension) and should be 1
+<dataset> refers to the dataset name (WITH the file extension) and should be 1
 of the 15 dataset file names contained in the "scripts/datasets" folder
 
 <classifier_parameter> for each classifier:
 TODO
 
 note that arguments can be ommited to execute the script with default values, e.g. 
-> python main.py SVM TODOdatasetName
+> python main.py SVM Congress.csv
 > python main.py DTree
 are both valid commands, however
-> python main.py TODOdatasetName
+> python main.py Congress.csv
 is NOT valid
 
  
