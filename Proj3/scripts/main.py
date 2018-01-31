@@ -1,6 +1,5 @@
 import sys
 
-from classifiers.default import trainDefault
 from classifiers.bayes import trainBayes
 from classifiers.dTree import trainDTree
 from classifiers.knn import trainKNN
@@ -8,7 +7,7 @@ from classifiers.svm import trainSVM
 
 def main():
     if(len(sys.argv) == 1):
-        trainDefault()
+        trainBayes(sys.argv)
     elif(len(sys.argv) > 1):
         chooseClassifier()
 
