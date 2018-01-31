@@ -9,4 +9,4 @@ def trainKNN(args):
 		datasetName = "Congress.csv"
 	
 	print("training KNeighborsClassifier on "+ datasetName +" dataset")
-	df = pd.read_csv("datasets/"+datasetName)
+	df = pd.read_csv("datasets/"+datasetName, header=None)

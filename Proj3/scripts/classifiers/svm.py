@@ -9,4 +9,4 @@ def trainSVM(args):
 		datasetName = "Congress.csv"
 
 	print("training SVC on "+ datasetName +" dataset")
-	df = pd.read_csv("datasets/"+datasetName)
+	df = pd.read_csv("datasets/"+datasetName, header=None)

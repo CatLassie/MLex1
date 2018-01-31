@@ -6,6 +6,6 @@ def trainDefault():
 	datasetName = "Congress.csv"
 	print("Training default classifier (GaussianNB) on default dataset ("+datasetName+")")
 
-	df = pd.read_csv("datasets/"+datasetName)
+	df = pd.read_csv("datasets/"+datasetName, header=None)
 	print(df)
 	

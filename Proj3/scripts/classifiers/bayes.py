@@ -9,4 +9,4 @@ def trainBayes(args):
 		datasetName = "Congress.csv"
 
 	print("training GaussianNB on "+ datasetName +" dataset")
-	df = pd.read_csv("datasets/"+datasetName)
+	df = pd.read_csv("datasets/"+datasetName, header=None)

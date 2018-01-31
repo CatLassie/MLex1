@@ -9,4 +9,4 @@ def trainDTree(args):
 		datasetName = "Congress.csv"
 
 	print("training DecisionTreeClassifier on "+ datasetName +" dataset")
-	df = pd.read_csv("datasets/"+datasetName)
+	df = pd.read_csv("datasets/"+datasetName, header=None)
